@@ -60,10 +60,8 @@ SKIP_IPLIKE_INSTALL before installing this RPM.
 
 	SKIP_IPLIKE_INSTALL=1 rpm -Uvh %{name}-%{version}-%{revision}.%{buildarch}.rpm
 
-To install iplike into your database, run, on the psql command-line:
-
-	CREATE OR REPLACE FUNCTION iplike(text,text) RETURNS bool AS '%{_libdir}/iplike.so' LANGUAGE 'c' WITH(isstrict);
-
+To install iplike into your database, use the %{_sbindir}/install_iplike.sh script.
+See `install_iplike.sh -h` for more details.
 END
 	fi
 
