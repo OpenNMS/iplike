@@ -1,3 +1,4 @@
+ACLOCAL_AMFLAGS = -I .
 AM_CPPFLAGS = $(PGINCLUDES) $(all_includes)
 
 lib_LTLIBRARIES = iplike.la
