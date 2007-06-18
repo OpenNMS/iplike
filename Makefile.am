@@ -1,5 +1,6 @@
 ACLOCAL_AMFLAGS = -I .
 AM_CPPFLAGS = $(PGINCLUDES) $(all_includes)
+distdir = $(PACKAGE)-$(VERSION)-$(RELEASE)
 
 lib_LTLIBRARIES = iplike.la
 iplike_la_SOURCES = iplike.c

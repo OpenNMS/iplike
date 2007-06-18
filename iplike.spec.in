@@ -1,4 +1,4 @@
-%define rel @RPM_RELEASE@
+%define rel @RELEASE@
 %define version @VERSION@
 %define pkgname @PACKAGE@
 

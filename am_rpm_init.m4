@@ -20,8 +20,8 @@
 #   In configure.in:
 #
 #     dnl For my rpm.m4 macros
-#     RPM_RELEASE=1
-#     AC_SUBST(RPM_RELEASE)
+#     RELEASE=1
+#     AC_SUBST(RELEASE)
 #
 #     AM_RPM_INIT
 #     dnl Enable or disable the rpm making rules in Makefile.am
@@ -60,7 +60,7 @@
 #     # -*- Mode:rpm-spec -*-
 #     # mysql++.spec.in
 #     Summary: Your package description goes here
-#     %define rel @RPM_RELEASE@
+#     %define rel @RELEASE@
 #
 #     %define version @VERSION@
 #     %define pkgname @PACKAGE@
@@ -231,7 +231,7 @@ echo *** indicate the path to the rpmbuild program using  --with-rpmbuild-prog=P
       fi
       AC_MSG_CHECKING(how rpm sets %{_rpmfilename})
       rpmarch=`rpm --eval '%{_arch}'`
-      rpmfilename=$rpmdir/`rpm --eval '%{_rpmfilename}' | sed "s/%{ARCH}/$rpmarch/g" | sed "s/%{NAME}/$PACKAGE/g" | sed "s/%{VERSION}/${VERSION}/g" | sed "s/%{RELEASE}/${RPM_RELEASE}/g"`
+      rpmfilename=$rpmdir/`rpm --eval '%{_rpmfilename}' | sed "s/%{ARCH}/$rpmarch/g" | sed "s/%{NAME}/$PACKAGE/g" | sed "s/%{VERSION}/${VERSION}/g" | sed "s/%{RELEASE}/${RELEASE}/g"`
       AC_MSG_RESULT([$rpmfilename])
 
       RPM_DIR="${rpmdir}"
