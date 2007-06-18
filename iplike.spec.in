@@ -49,8 +49,8 @@ fi
 if [ $FAILED -eq 1 ]; then
 	cat <<END
 
-echo "Failed to install iplike into template1 or opennms databases."
-echo "See /tmp/install_iplike.log for details."
+Failed to install iplike into template1 or opennms databases.
+See /tmp/install_iplike.log for details.
 
 To install iplike into your database, run, on the psql command-line:
 
