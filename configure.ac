@@ -48,6 +48,6 @@ PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq"
 AC_SUBST(PGINCLUDES)
 AC_SUBST(PGLIBS)
 
-AC_CONFIG_FILES([Makefile iplike.spec])
+AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh])
 
 AC_OUTPUT
