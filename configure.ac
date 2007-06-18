@@ -43,7 +43,7 @@ if test -z "$PGCONFIG"; then
 	AC_MSG_ERROR([PostgreSQL is required]);
 fi
 PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
-PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq "
+PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq"
 
 AC_SUBST(PGINCLUDES)
 AC_SUBST(PGLIBS)

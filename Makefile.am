@@ -5,6 +5,8 @@ lib_LTLIBRARIES = iplike.la
 iplike_la_SOURCES = iplike.c
 iplike_la_LDFLAGS = -module -avoid-version
 
+sbin_SCRIPTS = install_iplike.sh
+
 if MAKE_RPMS
 rpm: @RPM_TARGET@
 
