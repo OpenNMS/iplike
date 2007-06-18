@@ -1,4 +1,4 @@
-AC_INIT([iplike],[1.0.1])
+AC_INIT([iplike],[1.0.2])
 RPM_RELEASE=1
 
 AC_CONFIG_MACRO_DIR([.])
