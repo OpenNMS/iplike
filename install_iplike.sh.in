@@ -36,7 +36,7 @@ END
 [ -z "$PG_HOST"     ] && PG_HOST="localhost"
 [ -z "$PG_PORT"     ] && PG_PORT="5432"
 
-while getopts hu:p:x:s: ARG; do
+while getopts hd:u:x:p:s: ARG; do
 	case "$ARG" in
 		h) do_help ;;
 		d) PG_DATABASE="$OPTARG" ;;
