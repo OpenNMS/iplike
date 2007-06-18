@@ -47,7 +47,7 @@
 #       ${MAKE} dist
 #       -mkdir -p $(RPM_DIR)/SRPMS
 #       -mkdir -p `dirname $(RPM_TARGET)`
-#       $(RPM_PROG) $(RPM_ARGS) $(RPM_TARBALL)
+#       $(RPMBUILD_PROG) $(RPM_ARGS) $(RPM_TARBALL)
 #       @echo Congratulations, $(RPM_TARGET) "(and friends)" should now exist.
 #     else
 #     endif
@@ -185,8 +185,8 @@ AC_DEFUN([AM_RPM_INIT],
 [dnl
 AC_REQUIRE([AC_CANONICAL_HOST])
 dnl Find the RPM program
-AC_ARG_WITH(rpm-prog,[  --with-rpm-prog=PROG   Which rpm to use (optional)],
-            rpm_prog="$withval", rpm_prog="")
+AC_ARG_WITH(rpmbuild-prog,[  --with-rpmbuild-prog=PROG   Which rpm to use (optional)],
+            rpmbuild_prog="$withval", rpmbuild_prog="")
 
 AC_ARG_ENABLE(rpm-rules, [  --enable-rpm-rules       Try to create rpm make rules (defaults to yes)],
                 enable_rpm_rules="$withval",enable_rpm_rules=yes)
@@ -200,24 +200,24 @@ AC_ARG_WITH(rpm-extra-args, [  --with-rpm-extra-args=ARGS       Run rpm with ext
      echo "Not trying to build rpms for your system (use --enable-rpm-rules to override) "
      no_rpm=yes
   else
-    if test x$rpm_prog != x ; then
-       if test x${RPM_PROG+set} != xset ; then
-          RPM_PROG=$rpm_prog
+    if test x$rpmbuild_prog != x ; then
+       if test x${RPMBUILD_PROG+set} != xset ; then
+          RPMBUILD_PROG=$rpmbuild_prog
        fi
     fi
 
-    AC_PATH_PROG(RPM_PROG, rpm, no)
+    AC_PATH_PROG(RPMBUILD_PROG, rpmbuild, no)
     no_rpm=no
-    if test "$RPM_PROG" = "no" ; then
+    if test "$RPMBUILD_PROG" = "no" ; then
 echo *** RPM Configuration Failed
-echo *** Failed to find the rpm program.  If you want to build rpm packages
-echo *** indicate the path to the rpm program using  --with-rpm-prog=PROG
+echo *** Failed to find the rpmbuild program.  If you want to build rpm packages
+echo *** indicate the path to the rpmbuild program using  --with-rpmbuild-prog=PROG
       no_rpm=yes
       RPM_MAKE_RULES=""
     else
       AC_MSG_CHECKING(how rpm sets %{_rpmdir})
-      rpmdir=`rpm --eval %{_rpmdir}`
-      if test x$rpmdir = x"%{_rpmdir}" ; then
+      rpmdir=`rpm --eval '%{_rpmdir}'`
+      if test x$rpmdir = x'%{_rpmdir}' ; then
         AC_MSG_RESULT([not set (cannot build rpms?)])
         echo *** Could not determine the value of %{_rpmdir}
         echo *** This could be because it is not set, or your version of rpm does not set it
@@ -230,20 +230,20 @@ echo *** indicate the path to the rpm program using  --with-rpm-prog=PROG
         AC_MSG_RESULT([$rpmdir])
       fi
       AC_MSG_CHECKING(how rpm sets %{_rpmfilename})
-      rpmfilename=$rpmdir/`rpm --eval %{_rpmfilename} | sed "s/%{ARCH}/${host_cpu}/g" | sed "s/%{NAME}/$PACKAGE/g" | sed "s/%{VERSION}/${VERSION}/g" | sed "s/%{RELEASE}/${RPM_RELEASE}/g"`
+      rpmfilename=$rpmdir/`rpm --eval '%{_rpmfilename}' | sed "s/%{ARCH}/${host_cpu}/g" | sed "s/%{NAME}/$PACKAGE/g" | sed "s/%{VERSION}/${VERSION}/g" | sed "s/%{RELEASE}/${RPM_RELEASE}/g"`
       AC_MSG_RESULT([$rpmfilename])
 
-      RPM_DIR=${rpmdir}
-      RPM_TARGET=$rpmfilename
+      RPM_DIR="${rpmdir}"
+      RPM_TARGET="$rpmfilename"
       RPM_ARGS="-ta $rpm_extra_args"
-      RPM_TARBALL=${PACKAGE}-${VERSION}.tar.gz
+      RPM_TARBALL="${PACKAGE}-${VERSION}.tar.gz"
     fi
   fi
 
   case "${no_rpm}" in
     yes) make_rpms=false;;
     no) make_rpms=true;;
-    *) AC_MSG_WARN([bad value ${no_rpm} for no_rpm (not making rpms)])
+    *) AC_MSG_WARN([not making rpms])
        make_rpms=false;;
   esac
   AC_SUBST(RPM_DIR)
