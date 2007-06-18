@@ -8,7 +8,7 @@ Release: %{rel}
 License: GPL
 Group: Applications/Databases
 Summary: PostgreSQL complex IP Address text field query
-Source: %{name}-%{version}.tar.gz
+Source: %{name}-%{version}-%{release}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 BuildRequires: postgresql-devel
