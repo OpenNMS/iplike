@@ -230,7 +230,8 @@ echo *** indicate the path to the rpmbuild program using  --with-rpmbuild-prog=P
         AC_MSG_RESULT([$rpmdir])
       fi
       AC_MSG_CHECKING(how rpm sets %{_rpmfilename})
-      rpmfilename=$rpmdir/`rpm --eval '%{_rpmfilename}' | sed "s/%{ARCH}/${host_cpu}/g" | sed "s/%{NAME}/$PACKAGE/g" | sed "s/%{VERSION}/${VERSION}/g" | sed "s/%{RELEASE}/${RPM_RELEASE}/g"`
+      rpmarch=`rpm --eval '%{_arch}'`
+      rpmfilename=$rpmdir/`rpm --eval '%{_rpmfilename}' | sed "s/%{ARCH}/$rpmarch/g" | sed "s/%{NAME}/$PACKAGE/g" | sed "s/%{VERSION}/${VERSION}/g" | sed "s/%{RELEASE}/${RPM_RELEASE}/g"`
       AC_MSG_RESULT([$rpmfilename])
 
       RPM_DIR="${rpmdir}"
