@@ -61,7 +61,7 @@ SKIP_IPLIKE_INSTALL before installing this RPM.
 	SKIP_IPLIKE_INSTALL=1 rpm -Uvh %{name}-%{version}-%{revision}.%{buildarch}.rpm
 
 To install iplike into your database, use the %{_sbindir}/install_iplike.sh script.
-See `install_iplike.sh -h` for more details.
+See \`install_iplike.sh -h\` for more details.
 END
 	fi
 
