@@ -1,6 +1,13 @@
-Name: iplike
-Version: 1.0
-Release: 1
+%define rel @RPM_RELEASE@
+%define version @VERSION@
+%define pkgname @PACKAGE@
+
+%define lt_release @LT_RELEASE@
+%define lt_version @LT_CURRENT@.@LT_REVISION@.@LT_AGE@
+
+Name: %{pkgname}
+Version: %{version}
+Release: %{rel}
 License: GPL
 Group: Applications/Databases
 Summary: PostgreSQL complex IP Address text field query
@@ -22,6 +29,11 @@ make
 
 %install
 %makeinstall
+
+%clean
+if [ "$RPM_BUILD_ROOT" != "/" ]; then
+	rm -rf "$RPM_BUILD_ROOT"
+fi
 
 %files
 %{_prefix}/lib/iplike*

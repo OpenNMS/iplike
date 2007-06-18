@@ -8,7 +8,7 @@
 
 [ -x "`which libtoolize 2>/dev/null`" ] && LIBTOOLIZE=libtoolize
 
-$ACLOCAL
+$ACLOCAL -I .
 $LIBTOOLIZE --automake --copy --force
 $AUTOHEADER --force
 $AUTOCONF --force

@@ -15,6 +15,11 @@ AC_PROG_LIBTOOL
 
 AC_CANONICAL_HOST
 
+RPM_RELEASE=1
+AC_SUBST(RPM_RELEASE)
+AM_RPM_INIT
+AM_CONDITIONAL(MAKE_RPMS, test x$make_rpms = xtrue)
+
 dnl
 dnl lovingly stolen from postgis' autoconf macros
 dnl
@@ -35,7 +40,7 @@ if test -z "$PGCONFIG"; then
 	AC_PATH_PROG([PGCONFIG], [pg_config])
 fi
 if test -z "$PGCONFIG"; then
-	AC_MSG_ERROR([PostgreSQL is required by PostGIS]);
+	AC_MSG_ERROR([PostgreSQL is required]);
 fi
 PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
 PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq "
