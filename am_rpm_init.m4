@@ -197,7 +197,7 @@ AC_ARG_WITH(rpm-extra-args, [  --with-rpm-extra-args=ARGS       Run rpm with ext
   RPM_TARGET=""
 
   if test x$enable_rpm_rules = xno ; then
-     echo "Not trying to build rpms for your system (use --enable-rpm-rules to override) "
+     echo "Not trying to build rpms for your system"
      no_rpm=yes
   else
     if test x$rpmbuild_prog != x ; then
