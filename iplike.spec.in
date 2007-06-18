@@ -28,35 +28,45 @@ make
 %makeinstall
 
 %post
-FAILED=0
 
-echo -e "- installing iplike into template1... \c"
-if %{_sbindir}/install_iplike.sh -s postgres -d template1 >/tmp/install_iplike.log 2>&1; then
-	echo "OK"
-else
-	echo "failed"
-	FAILED=1
-fi
+if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
 
-echo -e "- installing iplike into opennms (if it exists)... \c"
-if %{_sbindir}/install_iplike.sh -s postgres -d opennms >>/tmp/install_iplike.log 2>&1; then
-	echo "OK"
-else
-	echo "failed"
-	FAILED=1
-fi
+	FAILED=0
 
-if [ $FAILED -eq 1 ]; then
-	cat <<END
+	echo -e "- installing iplike into the template1 db... \c"
+	if %{_sbindir}/install_iplike.sh -s postgres -d template1 >/tmp/install_iplike.log 2>&1; then
+		echo "OK"
+	else
+		echo "failed"
+		FAILED=1
+	fi
+
+	echo -e "- installing iplike into the opennms db (if it exists)... \c"
+	if %{_sbindir}/install_iplike.sh -s postgres -d opennms >>/tmp/install_iplike.log 2>&1; then
+		echo "OK"
+	else
+		echo "failed"
+		FAILED=1
+	fi
+
+	if [ $FAILED -eq 1 ]; then
+		cat <<END
 
 Failed to install iplike into template1 or opennms databases.
 See /tmp/install_iplike.log for details.
+
+To skip this step and install manually, set the environment variable
+SKIP_IPLIKE_INSTALL before installing this RPM.
+
+	SKIP_IPLIKE_INSTALL=1 rpm -Uvh %{name}-%{version}-%{revision}.%{buildarch}.rpm
 
 To install iplike into your database, run, on the psql command-line:
 
 	CREATE OR REPLACE FUNCTION iplike(text,text) RETURNS bool AS '%{_libdir}/iplike.so' LANGUAGE 'c' WITH(isstrict);
 
 END
+	fi
+
 fi
 
 exit 0
