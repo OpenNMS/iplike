@@ -1,4 +1,4 @@
-AC_INIT([iplike],[1.0.4])
+AC_INIT([iplike],[1.0.5])
 RELEASE=1
 
 AC_CONFIG_MACRO_DIR([.])

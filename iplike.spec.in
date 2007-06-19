@@ -76,7 +76,7 @@ if [ "$RPM_BUILD_ROOT" != "/" ]; then
 fi
 
 %files
-%{_libdir}/iplike*
+%attr(755,root,root) %{_libdir}/iplike*
 %attr(755,root,root) %{_sbindir}/install_iplike.sh
 
 %changelog
