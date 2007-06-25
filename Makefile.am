@@ -8,7 +8,7 @@ iplike_la_LDFLAGS = -module -avoid-version
 
 sbin_SCRIPTS = install_iplike.sh
 
-MAINTAINERCLEANFILES = aclocal.m4 config.guess config.sub configure depcomp install-sh ltmain.sh Makefile.in missing *~
+MAINTAINERCLEANFILES = aclocal.m4 config.guess config.h.in config.sub configure depcomp install-sh ltmain.sh Makefile.in missing *~
 
 if MAKE_RPMS
 rpm: @RPM_TARGET@
