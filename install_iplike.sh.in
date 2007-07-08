@@ -47,7 +47,7 @@ if [ ! -r "$libdir/iplike.la" ]; then
 	do_error "unable to locate iplike.la"
 fi
 
-source "$libdir/iplike.la"
+. "$libdir/iplike.la"
 
 if [ ! -f "$libdir/$dlname" ]; then
 	do_error "$libdir/$dlname does not exist"
