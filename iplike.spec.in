@@ -8,7 +8,7 @@ Release: %{rel}
 License: GPL
 Group: Applications/Databases
 Summary: PostgreSQL complex IP Address text field query
-Source: %{name}-%{version}-%{release}.tar.gz
+Source: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 BuildRequires: postgresql-devel
@@ -18,7 +18,7 @@ PostgreSQL function for doing complex IP address queries
 on a text field.
 
 %prep
-%setup -n %{name}-%{version}-%{release}
+%setup -n %{name}-%{version}
 
 %build
 %configure
