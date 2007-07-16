@@ -23,7 +23,6 @@ dnl
 dnl lovingly stolen from postgis' autoconf macros
 dnl
 
-AC_SUBST(PGCONFIG)
 PGCONFIG=
 AC_ARG_WITH(pgsql, 
 [  --with-pgsql[[=ARG]]      build for a specific pgsql version
@@ -43,9 +42,12 @@ if test -z "$PGCONFIG"; then
 fi
 PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
 PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq"
+PSQL_BINDIR=`$PGCONFIG --bindir`
 
-AC_SUBST(PGINCLUDES)
-AC_SUBST(PGLIBS)
+AC_SUBST([PGCONFIG])
+AC_SUBST([PGINCLUDES])
+AC_SUBST([PGLIBS])
+AC_SUBST([PSQL_BINDIR])
 
 AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh])
 
