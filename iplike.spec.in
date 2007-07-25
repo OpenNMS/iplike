@@ -2,6 +2,12 @@
 %define version @VERSION@
 %define pkgname @PACKAGE@
 
+%define _libdir %_prefix/lib
+
+%ifarch x86_64
+%define _libdir %_prefix/lib64
+%endif
+
 Name: %{pkgname}
 Version: %{version}
 Release: %{rel}
