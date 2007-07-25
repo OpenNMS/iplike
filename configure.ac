@@ -1,7 +1,7 @@
-AC_INIT([iplike],[1.0.6])
+AC_INIT([iplike],[1.0.7])
 RELEASE=1
 
-AC_CONFIG_MACRO_DIR([.])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([1.8 foreign])
