@@ -7,6 +7,11 @@ iplike_la_LDFLAGS = -module -avoid-version
 
 sbin_SCRIPTS = install_iplike.sh
 
+check_PROGRAMS = iplike
+iplike_SOURCES = iplike-cmd.c iplike.c
+
+TESTS = tests.sh
+
 MAINTAINERCLEANFILES = aclocal.m4 config.guess config.h.in config.sub configure depcomp install-sh ltmain.sh Makefile.in missing *~
 
 if MAKE_RPMS

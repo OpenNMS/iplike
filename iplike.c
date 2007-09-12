@@ -34,9 +34,6 @@
 // iplike.c,v 1.1.1.1 2001/11/11 17:40:07 ben Exp
 //
 */
-#ifdef DEBUG
-# include <stdio.h>		/* used for debugging */
-#endif
 
 #include <ctype.h>		/* used for isdigit() & isspace() */
 
@@ -52,10 +49,6 @@
     PG_MODULE_MAGIC;
 #  endif
 # endif
-#endif
-
-#ifdef DEBUG
-#define LOG_FILE  "/var/log/opennms/iplike.log"
 #endif
 
 /**
@@ -550,32 +543,3 @@ bool iplike(text *value, text *rule)
 	
 	return rcode;
 }
-
-#ifdef DEBUG
-int main(int argc, char **argv)
-{
-	text *	arg1;
-	text *	arg2;
-	char	arg1_buf[1024];
-	char	arg2_buf[1024];
-	
-	if(argc != 3)
-		return 1;
-	
-	
-	arg1 = (text *)arg1_buf;
-	arg2 = (text *)arg2_buf;
-#ifdef TUPLE_TOASTER_ACTIVE
-	VARATT_SIZEP(arg1) = strlen(argv[1])+VARHDRSZ;
-	VARATT_SIZEP(arg2) = strlen(argv[2])+VARHDRSZ;
-#else
-	VARSIZE(arg1) = strlen(argv[1])+VARHDRSZ;
-	VARSIZE(arg2) = strlen(argv[2])+VARHDRSZ;
-#endif
-	strcpy(VARDATA(arg1), argv[1]);
-	strcpy(VARDATA(arg2), argv[2]);
-	
-	return (iplike(arg1, arg2) == true ? 0 : 1);
-}
-#endif
-
