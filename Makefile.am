@@ -1,14 +1,19 @@
 ACLOCAL_AMFLAGS = -I .
 AM_CPPFLAGS = $(PGINCLUDES) $(all_includes)
 
+noinst_LTLIBRARIES = libiplike_common.la
+libiplike_common_la_SOURCES = iplike.c
+
 lib_LTLIBRARIES = iplike.la
-iplike_la_SOURCES = iplike.c
+iplike_la_SOURCES =
+iplike_la_LIBADD = libiplike_common.la
 iplike_la_LDFLAGS = -module -avoid-version
 
 sbin_SCRIPTS = install_iplike.sh
 
 check_PROGRAMS = iplike
-iplike_SOURCES = iplike-cmd.c iplike.c
+iplike_SOURCES = iplike-cmd.c
+iplike_LDADD = libiplike_common.la
 
 TESTS = tests.sh
 
