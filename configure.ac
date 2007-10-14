@@ -14,6 +14,8 @@ AC_HEADER_STDC
 AC_PROG_CC
 AC_PROG_LN_S
 AC_PROG_LIBTOOL
+ONMS_CHECK_SUNCC
+ONMS_SET_CC_WARNING_CFLAGS
 
 AM_RPM_INIT
 AM_CONDITIONAL(MAKE_RPMS, test x$make_rpms = xtrue)
@@ -42,6 +44,67 @@ fi
 PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
 PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq"
 PSQL_BINDIR=`$PGCONFIG --bindir`
+
+saved_CPPFLAGS="${CPPFLAGS}"
+CPPFLAGS="${CPPFLAGS} ${PGINCLUDES}"
+
+AC_MSG_CHECKING(for postgres.h)
+AC_CACHE_VAL(onms_postgres_h_good_without_undef,
+  [
+    AC_TRY_COMPILE([
+      /* These are defined in pg_config.h and in confdefs.h, which is bad */
+      #undef PACKAGE_BUGREPORT
+      #undef PACKAGE_NAME
+      #undef PACKAGE_STRING
+      #undef PACKAGE_TARNAME
+      #undef PACKAGE_VERSION
+
+      #include <ctype.h>
+      #include <postgres.h>
+    ],
+    [],
+    [onms_postgres_h_good_without_undef=yes],
+    [onms_postgres_h_good_without_undef=no])
+  ])
+AC_MSG_RESULT($onms_postgres_h_good_without_undef)
+
+AS_IF([test "x$onms_postgres_h_good_without_undef" != "xyes"],
+  [
+    AC_MSG_CHECKING(for postgres.h with _FILE_OFFSET_BITS undefined)
+    AC_CACHE_VAL(onms_postgres_h_good_with_undef,
+      [
+        AC_TRY_COMPILE([
+          /* These are defined in pg_config.h and in confdefs.h, which is bad */
+          #undef PACKAGE_BUGREPORT
+          #undef PACKAGE_NAME
+          #undef PACKAGE_STRING
+          #undef PACKAGE_TARNAME
+          #undef PACKAGE_VERSION
+    
+          #include <ctype.h>
+    
+          #undef _FILE_OFFSET_BITS
+    
+          #include <postgres.h>
+        ],
+        [],
+        [onms_postgres_h_good_with_undef=yes],
+        [onms_postgres_h_good_with_undef=no])
+      ])
+    AC_MSG_RESULT($onms_postgres_h_good_with_undef)
+
+    AS_IF([test "x$onms_postgres_h_good_with_undef" = "xyes"],
+      [
+        PGINCLUDES="${PGINCLUDES} -DUNDEF_FILE_OFFSET_BITS=1"
+      ],
+      [
+        AC_MSG_ERROR([could not compile test program with postgres.h])
+      ]
+    )
+  ]
+)
+
+CPPFLAGS="${saved_CPPFLAGS}"
 
 AC_SUBST([PGCONFIG])
 AC_SUBST([PGINCLUDES])
