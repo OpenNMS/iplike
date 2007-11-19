@@ -18,6 +18,7 @@ Source: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 BuildRequires: postgresql-devel, gcc
+Requires: sudo
 
 %description
 PostgreSQL function for doing complex IP address queries
