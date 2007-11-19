@@ -53,7 +53,7 @@ if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
 		echo "OK"
 	else
 		echo "failed"
-		FAILED=1
+#		FAILED=1
 	fi
 
 	if [ $FAILED -eq 1 ]; then
