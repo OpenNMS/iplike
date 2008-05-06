@@ -1,4 +1,4 @@
-ACLOCAL_AMFLAGS = -I .
+ACLOCAL_AMFLAGS = -I m4
 AM_CPPFLAGS = $(PGINCLUDES) $(all_includes)
 
 noinst_LTLIBRARIES = libiplike_common.la
