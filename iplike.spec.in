@@ -59,18 +59,17 @@ if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
 	if [ $FAILED -eq 1 ]; then
 		cat <<END
 
+!!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!!
+
 Failed to install iplike into the template1 or opennms databases.
 See /tmp/install_iplike.log for details.
-
-To skip this step and install manually, set the environment variable
-SKIP_IPLIKE_INSTALL before installing this RPM.
 
 To install iplike into your database, use the %{_sbindir}/install_iplike.sh
 script.  See \`install_iplike.sh -h\` for more details.
 
 END
 
-		exit 1
+		exit 0
 	fi
 
 fi
