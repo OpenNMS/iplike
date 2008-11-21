@@ -49,11 +49,14 @@ PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
 PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq"
 PSQL_BINDIR=`$PGCONFIG --bindir`
 
+CPPFLAGS="$CPPFLAGS -DWIN32_CLIENT_ONLY"
+
 saved_CPPFLAGS="${CPPFLAGS}"
 CPPFLAGS="${CPPFLAGS} ${PGINCLUDES}"
 
+AC_CHECK_HEADERS([windef.h])
 AC_MSG_CHECKING(for postgres.h)
-AC_CACHE_VAL(onms_postgres_h_good_without_undef,
+AC_CACHE_VAL(onms_cv_postgres_h_good_without_undef,
   [
     AC_TRY_COMPILE([
       /* These are defined in pg_config.h and in confdefs.h, which is bad */
@@ -67,15 +70,15 @@ AC_CACHE_VAL(onms_postgres_h_good_without_undef,
       #include <postgres.h>
     ],
     [],
-    [onms_postgres_h_good_without_undef=yes],
-    [onms_postgres_h_good_without_undef=no])
+    [onms_cv_postgres_h_good_without_undef=yes],
+    [onms_cv_postgres_h_good_without_undef=no])
   ])
-AC_MSG_RESULT($onms_postgres_h_good_without_undef)
+AC_MSG_RESULT($onms_cv_postgres_h_good_without_undef)
 
-AS_IF([test "x$onms_postgres_h_good_without_undef" != "xyes"],
+AS_IF([test "x$onms_cv_postgres_h_good_without_undef" != "xyes"],
   [
     AC_MSG_CHECKING(for postgres.h with _FILE_OFFSET_BITS undefined)
-    AC_CACHE_VAL(onms_postgres_h_good_with_undef,
+    AC_CACHE_VAL(onms_cv_postgres_h_good_with_undef,
       [
         AC_TRY_COMPILE([
           /* These are defined in pg_config.h and in confdefs.h, which is bad */
@@ -92,12 +95,12 @@ AS_IF([test "x$onms_postgres_h_good_without_undef" != "xyes"],
           #include <postgres.h>
         ],
         [],
-        [onms_postgres_h_good_with_undef=yes],
-        [onms_postgres_h_good_with_undef=no])
+        [onms_cv_postgres_h_good_with_undef=yes],
+        [onms_cv_postgres_h_good_with_undef=no])
       ])
-    AC_MSG_RESULT($onms_postgres_h_good_with_undef)
+    AC_MSG_RESULT($onms_cv_postgres_h_good_with_undef)
 
-    AS_IF([test "x$onms_postgres_h_good_with_undef" = "xyes"],
+    AS_IF([test "x$onms_cv_postgres_h_good_with_undef" = "xyes"],
       [
         PGINCLUDES="${PGINCLUDES} -DUNDEF_FILE_OFFSET_BITS=1"
       ],

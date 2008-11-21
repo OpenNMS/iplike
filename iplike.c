@@ -35,7 +35,12 @@
 //
 */
 
+#include <config.h>
 #include <ctype.h>		/* used for isdigit() & isspace() */
+
+#ifdef HAVE_WINDEF_H
+#include <windef.h>
+#endif
 
 #ifdef UNDEF_FILE_OFFSET_BITS
 # undef _FILE_OFFSET_BITS
