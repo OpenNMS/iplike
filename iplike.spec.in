@@ -8,6 +8,10 @@
 %define _libdir %_prefix/lib64
 %endif
 
+%ifarch s390x
+%define _libdir %_prefix/lib64
+%endif
+
 Name: %{pkgname}
 Version: %{version}
 Release: %{rel}
