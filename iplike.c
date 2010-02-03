@@ -37,9 +37,38 @@
 
 #include <config.h>
 #include <ctype.h>		/* used for isdigit() & isspace() */
+#include <pwd.h>		/* so we don't get errors from pgsql's port.h */
+#include <netdb.h>		/* so we don't get errors from pgsql's port.h */
 
 #ifdef HAVE_WINDEF_H
 #include <windef.h>
+#endif
+
+/*
+ * These PACKAGE_* defines might be defined both by PostgreSQL and us, so undef 
+ * ours before we include postgres.h (sigh).  Maybe we could do the opposite
+ * and move these if/undef/endifs after the include of postgres.h and then
+ * include our config.h?  It doesn't seem to matter now because we don't use
+ * any of the PACKAGE_* defines.
+ */
+#ifdef PACKAGE_BUGREPORT
+# undef PACKAGE_BUGREPORT
+#endif
+
+#ifdef PACKAGE_NAME
+# undef PACKAGE_NAME
+#endif
+
+#ifdef PACKAGE_STRING
+# undef PACKAGE_STRING
+#endif
+
+#ifdef PACKAGE_TARNAME
+# undef PACKAGE_TARNAME
+#endif
+
+#ifdef PACKAGE_VERSION
+# undef PACKAGE_VERSION
 #endif
 
 #ifdef UNDEF_FILE_OFFSET_BITS
