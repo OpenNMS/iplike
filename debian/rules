@@ -1,0 +1,67 @@
+#!/usr/bin/make -f
+#export DH_VERBOSE=1
+DEB_TAR_SRCDIR := iplike-1.0.8
+PGSQL_TYPE := 84
+
+#include /usr/share/cdbs/1/rules/tarball.mk
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+DEB_CONFIGURE_EXTRA_FLAGS := --libdir=/usr/lib/postgresql/8.4/lib
+
+PATH := /usr/lib/postgresql/8.4/bin:$(PATH)
+
+CFLAGS = -Wall -g
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O2
+endif
+
+
+
+
+# Build architecture-independent files here.
+binary-indep: install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+	dh_installexamples
+#	dh_install
+#	dh_installmenu
+#	dh_installdebconf	
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_python
+#	dh_installinit
+#	dh_installcron
+#	dh_installinfo
+	# Lintian overrides
+	mkdir -p -m 755 $(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/share/lintian/overrides
+	install -m 644 $(CURDIR)/debian/overrides \
+		$(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/share/lintian/overrides/libiplike-pgsql$(PGSQL_TYPE)
+
+	dh_installman
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_perl
+#	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: binary-indep binary-arch binary install

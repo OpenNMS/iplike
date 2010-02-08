@@ -1,0 +1,11 @@
+Template: iplike/iplike-install-failed
+Type: error
+_Description: IPLIKE installation failed
+ Failed to install iplike into the template1 or opennms databases.
+ See /tmp/install_iplike.log for details.
+ 
+ To skip this step and install manually, set the environment variable
+ SKIP_IPLIKE_INSTALL before installing this package.
+ 
+ To install iplike into your database, use the /usr/sbin/install_iplike.sh
+ script.  See `install_iplike.sh -h` for more details.
