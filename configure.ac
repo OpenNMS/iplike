@@ -54,6 +54,12 @@ CPPFLAGS="$CPPFLAGS -DWIN32_CLIENT_ONLY"
 saved_CPPFLAGS="${CPPFLAGS}"
 CPPFLAGS="${CPPFLAGS} ${PGINCLUDES}"
 
+PGAC_TYPE_64BIT_INT([long int])
+
+if test x"$HAVE_LONG_INT_64" = x"no" ; then
+  PGAC_TYPE_64BIT_INT([long long int])
+fi
+
 AC_CHECK_HEADERS([windef.h])
 AC_MSG_CHECKING(for postgres.h)
 AC_CACHE_VAL(onms_cv_postgres_h_good_without_undef,
@@ -65,6 +71,11 @@ AC_CACHE_VAL(onms_cv_postgres_h_good_without_undef,
       #undef PACKAGE_STRING
       #undef PACKAGE_TARNAME
       #undef PACKAGE_VERSION
+
+      #ifdef HAVE_WINDEF_H
+      #include <winsock2.h>
+      #include <windef.h>
+      #endif
 
       #include <ctype.h>
       #include <postgres.h>
@@ -88,6 +99,11 @@ AS_IF([test "x$onms_cv_postgres_h_good_without_undef" != "xyes"],
           #undef PACKAGE_TARNAME
           #undef PACKAGE_VERSION
     
+          #ifdef HAVE_WINDEF_H
+          #include <winsock2.h>
+          #include <windef.h>
+          #endif
+
           #include <ctype.h>
     
           #undef _FILE_OFFSET_BITS

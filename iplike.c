@@ -41,6 +41,7 @@
 #include <netdb.h>		/* so we don't get errors from pgsql's port.h */
 
 #ifdef HAVE_WINDEF_H
+#include <winsock2.h>
 #include <windef.h>
 #endif
 
