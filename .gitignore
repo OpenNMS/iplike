@@ -1,6 +1,8 @@
 .*.swp
+*~
 *.tar.gz
 .deps
+.libs
 Makefile
 Makefile.in
 aclocal.m4
@@ -20,3 +22,5 @@ libtool
 ltmain.sh
 missing
 stamp-h1
+*.la
+*.lo
