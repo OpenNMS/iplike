@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for iplike-pgsql84
+# postinst script for iplike-pgsql83
 #
 # see: dh_installdeb(1)
 
