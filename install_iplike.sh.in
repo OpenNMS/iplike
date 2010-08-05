@@ -9,6 +9,7 @@ libdir="@libdir@"
 [ -z "$PG_HOST"     ] && PG_HOST="localhost"
 [ -z "$PG_PORT"     ] && PG_PORT="5432"
 [ -z "$PG_PSQL"     ] && PG_PSQL="@PSQL_BINDIR@/psql"
+[ -z "$PG_LIBDIR"   ] && PG_LIBDIR="@libdir@"
 
 do_error() {
 	echo "Cannot install iplike: $@"
@@ -22,6 +23,7 @@ usage: $0 [-h] [-d database] [-u pg_user] [-x pg_host] [-p pg_port] [-s sudo_use
 	-h   this help
 	-c   the PostgreSQL \`psql\` command to run (default: "$PG_PSQL")
 	-d   the PostgreSQL database to insert the function into (default: "$PG_DATABASE")
+	-l   the PostgreSQL library directory (default: "$PG_LIBDIR")
 	-u   the PostgreSQL user to log in as (default: "$PG_USER")
 	-x   the PostgreSQL server name to connect to (default: "$PG_HOST")
 	-p   the PostgreSQL server port to connect to (default: "$PG_PORT")
@@ -33,11 +35,12 @@ END
 }
 
 
-while getopts hc:d:u:x:p:s: ARG; do
+while getopts hc:d:l:u:x:p:s: ARG; do
 	case "$ARG" in
 		h) do_help ;;
 		c) PG_PSQL="$OPTARG" ;;
 		d) PG_DATABASE="$OPTARG" ;;
+		l) PG_LIBDIR="$OPTARG" ;;
 		u) PG_USER="$OPTARG" ;;
 		x) PG_HOST="$OPTARG" ;;
 		p) PG_PORT="$OPTARG" ;;
@@ -45,14 +48,14 @@ while getopts hc:d:u:x:p:s: ARG; do
 	esac
 done
 
-if [ ! -r "$libdir/iplike.la" ]; then
+if [ ! -r "$PG_LIBDIR/iplike.la" ]; then
 	do_error "unable to locate iplike.la"
 fi
 
-. "$libdir/iplike.la"
+. "$PG_LIBDIR/iplike.la"
 
-if [ ! -f "$libdir/$dlname" ]; then
-	do_error "$libdir/$dlname does not exist"
+if [ ! -f "$PG_LIBDIR/$dlname" ]; then
+	do_error "$PG_LIBDIR/$dlname does not exist"
 fi
 
 if [ ! -x "$PG_PSQL" ]; then
@@ -67,5 +70,5 @@ PG_COMMAND="$PG_COMMAND $PG_PSQL"
 PG_COMMAND="$PG_COMMAND $PG_DATABASE"
 
 cat <<END | $PG_COMMAND
-CREATE OR REPLACE FUNCTION iplike(text,text) RETURNS bool AS '$libdir/$dlname' LANGUAGE 'c' WITH(isstrict);
+CREATE OR REPLACE FUNCTION iplike(text,text) RETURNS bool AS '$PG_LIBDIR/$dlname' LANGUAGE 'c' WITH(isstrict);
 END
