@@ -1,3 +1,9 @@
+iplike-pgsql83 (1.0.10-1) unstable; urgency=low
+
+  * Updated install_iplike.sh to support specifying the library directory.
+
+ -- Benjamin Reed <ranger@opennms.org>  Thu, 05 Aug 2010 13:32:00 -0500
+
 iplike-pgsql83 (1.0.9-1) unstable; urgency=low
 
   * Initial build for PostgreSQL 8.3
