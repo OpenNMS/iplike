@@ -1,4 +1,4 @@
-iplike-pgsql83 (1.0.9-2) unstable; urgency=low
+iplike-pgsql83 (1.0.9-1) unstable; urgency=low
 
   * Initial build for PostgreSQL 8.3
 
