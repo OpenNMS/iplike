@@ -24,6 +24,7 @@ missing
 stamp-h1
 *.la
 *.lo
+*.loT
 *.cdbs-orig
 debian/files
 debian/iplike-pgsql*
