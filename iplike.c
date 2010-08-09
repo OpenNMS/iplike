@@ -81,6 +81,9 @@
 # if PG_VERSION_NUM >= 80200
 #  include <fmgr.h>
 #  ifdef PG_MODULE_MAGIC
+#   ifndef DLLIMPORT
+#    define DLLIMPORT
+#   endif
     PG_MODULE_MAGIC;
 #  endif
 # endif
