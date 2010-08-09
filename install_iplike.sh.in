@@ -63,7 +63,13 @@ if [ ! -x "$PG_PSQL" ]; then
 fi
 
 PG_COMMAND="$PG_COMMAND $PG_PSQL"
-[ -n "$SUDO_USER" ] && PG_COMMAND="sudo -u $SUDO_USER $PG_COMMAND"
+if [ -n "$SUDO_USER"]; then
+	if [ -x /usr/bin/sudo ]; then
+		PG_COMMAND="sudo -u $SUDO_USER $PG_COMMAND"
+	else
+		PG_COMMAND="su $SUDO_USER -c $PG_COMMAND"
+	fi
+fi
 [ -n "$PG_USER"   ] && PG_COMMAND="$PG_COMMAND -U $PG_USER"
 [ -n "$PG_HOST"   ] && PG_COMMAND="$PG_COMMAND -h $PG_HOST"
 [ -n "$PG_PORT"   ] && PG_COMMAND="$PG_COMMAND -p $PG_PORT"
