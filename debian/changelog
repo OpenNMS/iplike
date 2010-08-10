@@ -1,3 +1,9 @@
+iplike-pgsql83 (1.0.10-3) unstable; urgency=low
+
+  * Rebuild on Lenny instead of Ubuntu.
+
+ -- Benjamin Reed <ranger@opennms.org>  Tue, 10 Aug 2010 13:02:00 -0500
+
 iplike-pgsql83 (1.0.10-2) unstable; urgency=low
 
   * Fix install_iplike to use su when sudo is not available.
