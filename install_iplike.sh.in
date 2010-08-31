@@ -63,7 +63,7 @@ if [ ! -x "$PG_PSQL" ]; then
 fi
 
 PG_COMMAND="$PG_COMMAND $PG_PSQL"
-if [ -n "$SUDO_USER"]; then
+if [ -n "$SUDO_USER" ]; then
 	if [ -x /usr/bin/sudo ]; then
 		PG_COMMAND="sudo -u $SUDO_USER $PG_COMMAND"
 	else
