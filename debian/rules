@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE=1
-DEB_TAR_SRCDIR := iplike-1.0.10
+DEB_TAR_SRCDIR := iplike-1.0.11
 PGSQL_TYPE := 82
 
 #include /usr/share/cdbs/1/rules/tarball.mk
@@ -20,14 +20,22 @@ else
 	CFLAGS += -O2
 endif
 
+configure:
+	dh_testdir
+	# This handles building directly from the git repo
+	if [ ! -e ./configure ]; then ./m4/autogen.sh; fi
+	dh_auto_configure
 
+build: configure
+	dh_auto_build
+	dh_auto_test
 
 # Build architecture-independent files here.
 binary-indep: install
 # We have nothing to do by default.
 
 # Build architecture-dependent files here.
-binary-arch: install
+binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
