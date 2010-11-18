@@ -44,14 +44,6 @@ if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
 
 	FAILED=0
 
-	echo -e "- installing iplike into the template1 db... \c"
-	if %{_sbindir}/install_iplike.sh -s postgres -d template1 >/tmp/install_iplike.log 2>&1; then
-		echo "OK"
-	else
-		echo "failed"
-		FAILED=1
-	fi
-
 	echo -e "- installing iplike into the opennms db (if it exists)... \c"
 	if %{_sbindir}/install_iplike.sh -s postgres -d opennms >>/tmp/install_iplike.log 2>&1; then
 		echo "OK"
@@ -65,7 +57,7 @@ if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
 
 !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!!
 
-Failed to install iplike into the template1 or opennms databases.
+Failed to install iplike into the opennms database.
 See /tmp/install_iplike.log for details.
 
 To install iplike into your database, use the %{_sbindir}/install_iplike.sh
