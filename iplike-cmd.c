@@ -6,6 +6,11 @@
 #endif /* UNDEF_FILE_OFFSET_BITS */
 #include <postgres.h>		/* PostgreSQL types */
 
+// VARATT_SIZEP is deprecated on modern PostgreSQL
+#ifndef SET_VARSIZE 
+#define SET_VARSIZE(v,l) (VARATT_SIZEP(v) = (l)) 
+#endif
+
 bool iplike(text *value, text *rule);
 
 int main(int argc, char **argv)
@@ -21,8 +26,8 @@ int main(int argc, char **argv)
 	
 	arg1 = (text *)arg1_buf;
 	arg2 = (text *)arg2_buf;
-	VARATT_SIZEP(arg1) = strlen(argv[1])+VARHDRSZ;
-	VARATT_SIZEP(arg2) = strlen(argv[2])+VARHDRSZ;
+	SET_VARSIZE(arg1, strlen(argv[1])+VARHDRSZ);
+	SET_VARSIZE(arg2, strlen(argv[2])+VARHDRSZ);
 	strcpy(VARDATA(arg1), argv[1]);
 	strcpy(VARDATA(arg2), argv[2]);
 	

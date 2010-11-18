@@ -41,6 +41,7 @@
 #include <netdb.h>		/* so we don't get errors from pgsql's port.h */
 
 #ifdef HAVE_WINDEF_H
+#include <winsock2.h>
 #include <windef.h>
 #endif
 
@@ -80,6 +81,9 @@
 # if PG_VERSION_NUM >= 80200
 #  include <fmgr.h>
 #  ifdef PG_MODULE_MAGIC
+#   ifndef DLLIMPORT
+#    define DLLIMPORT
+#   endif
     PG_MODULE_MAGIC;
 #  endif
 # endif

@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE=1
-DEB_TAR_SRCDIR := iplike-1.0.8
+DEB_TAR_SRCDIR := iplike-1.0.10
 PGSQL_TYPE := 84
 
 #include /usr/share/cdbs/1/rules/tarball.mk
@@ -20,15 +20,22 @@ else
 	CFLAGS += -O2
 endif
 
+configure:
+	dh_testdir
+	# This handles building directly from the git repo
+	if [ ! -e ./configure ]; then ./m4/autogen.sh; fi
+	dh_auto_configure
 
-
+build: configure
+	dh_auto_build
+	dh_auto_test
 
 # Build architecture-independent files here.
 binary-indep: install
 # We have nothing to do by default.
 
 # Build architecture-dependent files here.
-binary-arch: install
+binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
@@ -46,10 +53,11 @@ binary-arch: install
 #	dh_installcron
 #	dh_installinfo
 	# Lintian overrides
+	mv $(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/sbin/install_iplike.sh $(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/sbin/install_iplike-$(PGSQL_TYPE).sh
 	mkdir -p -m 755 $(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/share/lintian/overrides
 	install -m 644 $(CURDIR)/debian/overrides \
 		$(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/share/lintian/overrides/libiplike-pgsql$(PGSQL_TYPE)
-
+	find debian ! -type d | sort -u
 	dh_installman
 	dh_link
 	dh_strip
