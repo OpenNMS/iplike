@@ -20,7 +20,7 @@ TESTS = tests.sh
 
 MAINTAINERCLEANFILES = aclocal.m4 config.guess config.h.in config.sub configure depcomp install-sh ltmain.sh Makefile.in missing *~
 
-EXTRA_DIST = m4/* debian/po/* debian/*
+EXTRA_DIST = m4/* debian/po/* debian/* $(TESTS)
 
 if MAKE_RPMS
 rpm: @RPM_TARGET@
