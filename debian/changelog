@@ -1,8 +1,8 @@
-iplike-pgsql83 (1.0.10-4) unstable; urgency=low
+iplike-pgsql83 (1.0.11-1) unstable; urgency=low
 
-  * Rebuild on Lenny with libpq5 8.3 rather than 8.4.
+  * A number of small fixes to build, and a deprecation fix for PG.
 
- -- Benjamin Reed <ranger@opennms.org>  Wed, 11 Aug 2010 11:50:00 -0500
+ -- Benjamin Reed <ranger@opennms.org>  Thu, 18 Nov 2010 13:17:00 -0500
 
 iplike-pgsql83 (1.0.10-3) unstable; urgency=low
 
