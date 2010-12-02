@@ -15,7 +15,7 @@ do
 		""|"#"*) continue ;;
 	esac
 
-	echo -n . 1>&2
+	printf "." 1>&2
 
 	./iplike "$value" "$rule"
 	retval=$?
