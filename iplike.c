@@ -1074,9 +1074,9 @@ const bool iplike(const text *const value, const text *const rule)
 	// Initialize the arrays
 	for(i = 0; i < 9; i++)
 	{
-		// Preallocate 10 ranges per octet
+		// Preallocate 255 ranges per octet (to match previous version behavior)
 		// TODO: Dynamically allocate ranges as necessary
-		const int rangeCount = 10;
+		const int rangeCount = 255;
 		ranges[i].count = 0;
 		ranges[i].ranges = (OctetRange_t*)calloc(rangeCount, sizeof(OctetRange_t));
 		
