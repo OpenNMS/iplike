@@ -1,3 +1,9 @@
+iplike-pgsql81 (2.0.0-1) unstable; urgency=low
+
+  * Adds support for IPv6.
+
+ -- Benjamin Reed <ranger@opennms.org>  Sun, 12 Dec 2010 20:01:00 -0500
+
 iplike-pgsql81 (1.0.11-1) unstable; urgency=low
 
   * A number of small fixes to build, and a deprecation fix for PG.
