@@ -19,15 +19,18 @@ set -e
 # the debian-policy package
 
 LOGFILE=/tmp/install_iplike.log
+POSTGRESQL_VERSION=8.1
+PGSQL_TYPE=`echo $POSTGRESQL_VERSION | sed -e 's,[^0-9]*,,g'`
+PG_CONFIG=`ls -1 /usr/lib*/postgresql/$POSTGRESQL_VERSION/bin/pg_config | head -n 1`
 
 case "$1" in
     configure)
-    /usr/sbin/update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-81.sh"        81
-    /usr/sbin/update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "/usr/lib/postgresql/8.1/lib/iplike.so" 81
+    /usr/sbin/update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PGSQL_TYPE.sh" $PGSQL_TYPE
+    /usr/sbin/update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         `$PG_CONFIG --pkglibdir`"/iplike.so"      $PGSQL_TYPE
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
     	FAILED=0
-	/usr/sbin/install_iplike-81.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || FAILED=1
+	/usr/sbin/install_iplike-$PGSQL_TYPE.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || FAILED=1
 
 	if [ $FAILED -eq 1 ]; then
 	    db_input high iplike/iplike-install-failed || true
