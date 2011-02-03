@@ -17,6 +17,7 @@ configure
 depcomp
 install-sh
 install_iplike.sh
+iplike
 iplike.spec
 libtool
 ltmain.sh
@@ -25,6 +26,7 @@ stamp-h1
 *.la
 *.lo
 *.loT
+*.o
 *.cdbs-orig
 debian/files
 debian/iplike-pgsql*
