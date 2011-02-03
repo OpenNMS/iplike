@@ -1,16 +1,18 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE=1
-DEB_TAR_SRCDIR := iplike-2.0.0
-PGSQL_TYPE := 84
+
+IPLIKE_VERSION=2.0.0
+POSTGRESQL_VERSION=8.4
+
+DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
+PGSQL_TYPE := `echo $(POSTGRESQL_VERSION) | sed -e 's,[^0-9]*,,g'`
 
 #include /usr/share/cdbs/1/rules/tarball.mk
 include /usr/share/cdbs/1/rules/simple-patchsys.mk
 include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 
-PATH := /usr/lib/postgresql/8.4/bin:$(PATH)
-
-DEB_CONFIGURE_EXTRA_FLAGS := --libdir=`pg_config --pkglibdir`
+PATH := /usr/lib/postgresql/$(POSTGRESQL_VERSION)/bin:$(PATH)
 
 CFLAGS = -Wall -g
 
@@ -23,8 +25,8 @@ endif
 configure:
 	dh_testdir
 	# This handles building directly from the git repo
-	if [ ! -e ./configure ]; then ./m4/autogen.sh; fi
-	dh_auto_configure
+	if [ ! -e ./configure ]; then autoreconf -fvi; fi
+	dh_auto_configure -- --libdir=`pg_config --pkglibdir`
 
 build: configure
 	dh_auto_build
