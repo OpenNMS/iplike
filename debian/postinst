@@ -27,7 +27,7 @@ case "$1" in
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
     	FAILED=0
-	/usr/sbin/install_iplike-83.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || :
+	/usr/sbin/install_iplike-83.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || FAILED=1
 
 	if [ $FAILED -eq 1 ]; then
 	    db_input high iplike/iplike-install-failed || true

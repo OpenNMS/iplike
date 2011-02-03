@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE=1
-DEB_TAR_SRCDIR := iplike-1.0.11
+DEB_TAR_SRCDIR := iplike-2.0.0
 PGSQL_TYPE := 83
 
 #include /usr/share/cdbs/1/rules/tarball.mk
@@ -8,9 +8,9 @@ include /usr/share/cdbs/1/rules/simple-patchsys.mk
 include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 
-DEB_CONFIGURE_EXTRA_FLAGS := --libdir=/usr/lib/postgresql/8.3/lib
-
 PATH := /usr/lib/postgresql/8.3/bin:$(PATH)
+
+DEB_CONFIGURE_EXTRA_FLAGS := --libdir=`pg_config --pkglibdir`
 
 CFLAGS = -Wall -g
 
