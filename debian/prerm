@@ -7,8 +7,8 @@ set -e
 
 case "$1" in
     remove)
-        /usr/sbin/update-alternatives --remove "iplike.so"         "/usr/lib/postgresql/8.4/lib/iplike.so"
-        /usr/sbin/update-alternatives --remove "install_iplike.sh" "/usr/sbin/install_iplike-84.sh"
+        /usr/sbin/update-alternatives --remove "iplike.so"         "/usr/lib/postgresql/7.3/lib/iplike.so"
+        /usr/sbin/update-alternatives --remove "install_iplike.sh" "/usr/sbin/install_iplike-73.sh"
     ;;
 esac
 
