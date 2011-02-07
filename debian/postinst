@@ -19,7 +19,7 @@ set -e
 # the debian-policy package
 
 LOGFILE=/tmp/install_iplike.log
-POSTGRESQL_VERSION=8.4
+POSTGRESQL_VERSION=7.4
 PGSQL_TYPE=`echo $POSTGRESQL_VERSION | sed -e 's,[^0-9]*,,g'`
 PG_CONFIG=`ls -1 /usr/lib*/postgresql/$POSTGRESQL_VERSION/bin/pg_config | head -n 1`
 
