@@ -26,7 +26,7 @@ configure:
 	dh_testdir
 	# This handles building directly from the git repo
 	if [ ! -e ./configure ]; then autoreconf -fvi; fi
-	dh_auto_configure -- --libdir=`pg_config --pkglibdir`
+	dh_auto_configure
 
 build: configure
 	dh_auto_build
