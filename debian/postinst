@@ -21,12 +21,12 @@ set -e
 LOGFILE=/tmp/install_iplike.log
 POSTGRESQL_VERSION=8.4
 PGSQL_TYPE=`echo $POSTGRESQL_VERSION | sed -e 's,[^0-9]*,,g'`
-PG_CONFIG=`ls -1 /usr/lib*/postgresql/$POSTGRESQL_VERSION/bin/pg_config | head -n 1`
+PG_LIBDIR=`ls -1 -d /usr/lib*/postgresql/$POSTGRESQL_VERSION/lib`
 
 case "$1" in
     configure)
     /usr/sbin/update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PGSQL_TYPE.sh" $PGSQL_TYPE
-    /usr/sbin/update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         `$PG_CONFIG --pkglibdir`"/iplike.so"      $PGSQL_TYPE
+    /usr/sbin/update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PG_LIBDIR/iplike.so"                    $PGSQL_TYPE
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
     	FAILED=0
