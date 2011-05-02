@@ -384,7 +384,7 @@ const int convertIP(const char *p, int len, int *dest)
 	return -1;
 }
 
-static inline
+static
 const int trim(const char * *const p, int *const len) {
 	// perform some basic checks
 	if(*p == NULL || *len <= 0)
