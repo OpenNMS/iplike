@@ -30,4 +30,6 @@ stamp-h1
 *.cdbs-orig
 debian/files
 debian/iplike-pgsql*
+debian/postinst
+debian/prerm
 debian/stamp-*
