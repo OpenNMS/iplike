@@ -36,7 +36,7 @@ iplike-pgsql81 (1.0.10-1) unstable; urgency=low
 
 iplike-pgsql81 (1.0.9-1) unstable; urgency=low
 
-  * Initial build for PostgreSQL 7.3
+  * Initial build for PostgreSQL 7.4
 
  -- Benjamin Reed <ranger@opennms.org>  Mon, 08 Feb 2010 14:31:00 -0500
 
