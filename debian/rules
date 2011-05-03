@@ -1,12 +1,12 @@
 #!/usr/bin/make -f
 POSTGRESQL_VERSION=8.1
+PGSQL_TYPE=81
 #export DH_VERBOSE=1
 
 
 # Set up some useful variables
 IPLIKE_VERSION=2.0.2
 DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
-PGSQL_TYPE := `echo $(POSTGRESQL_VERSION) | sed -e 's,[^0-9]*,,g'`
 PG_LIBDIR := /usr/lib/postgresql/$(POSTGRESQL_VERSION)/lib
 
 #include /usr/share/cdbs/1/rules/tarball.mk
@@ -25,10 +25,12 @@ else
 endif
 
 debian/postinst: debian/postinst.in
-	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $>
+	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $@
+	chmod a+x $@
 
 debian/prerm: debian/prerm.in
-	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $>
+	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $@
+	chmod a+x $@
 
 configure:
 	dh_testdir
@@ -45,7 +47,7 @@ binary-indep: install
 # We have nothing to do by default.
 
 # Build architecture-dependent files here.
-binary-arch: build install
+binary-arch: build install debian/postinst debian/prerm
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
