@@ -48,6 +48,7 @@ fi
 PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
 PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq"
 PSQL_BINDIR=`$PGCONFIG --bindir`
+PGPLUGINDIR=`"${PGCONFIG}" --pkglibdir`
 
 CPPFLAGS="$CPPFLAGS -DWIN32_CLIENT_ONLY"
 
@@ -133,6 +134,7 @@ AC_SUBST([PGCONFIG])
 AC_SUBST([PGINCLUDES])
 AC_SUBST([PGLIBS])
 AC_SUBST([PSQL_BINDIR])
+AC_SUBST([PGPLUGINDIR])
 
 AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh])
 

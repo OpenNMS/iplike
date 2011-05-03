@@ -36,6 +36,12 @@ iplike-pgsql84 (1.0.10-1) unstable; urgency=low
 
 iplike-pgsql84 (1.0.9-1) unstable; urgency=low
 
-  * Initial build for PostgreSQL 8.4
+  * Initial build for PostgreSQL 7.3
 
  -- Benjamin Reed <ranger@opennms.org>  Mon, 08 Feb 2010 14:31:00 -0500
+
+iplike-pgsql84 (1.0.8-1) unstable; urgency=low
+
+  * Initial build for PostgreSQL 7.3
+
+ -- Benjamin Reed <ranger@opennms.org>  Tue, 20 Oct 2009 11:20:00 -0500

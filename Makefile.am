@@ -5,7 +5,7 @@ noinst_LTLIBRARIES = libiplike_common.la
 libiplike_common_la_SOURCES = iplike.c
 libiplike_common_la_LDFLAGS = $(PGLIBS)
 
-plugindir = `$(PGCONFIG) --pkglibdir`
+plugindir = @PGPLUGINDIR@
 plugin_LTLIBRARIES = iplike.la
 
 iplike_la_SOURCES =
