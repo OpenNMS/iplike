@@ -1,3 +1,9 @@
+iplike-pgsql84 (2.0.1-1) unstable; urgency=medium
+
+  * Build system and library path fixes.  Also handle sudo and su better.
+
+ -- Benjamin Reed <ranger@opennms.org>  Tue, 03 May 2011 13:34:00 -0500
+
 iplike-pgsql84 (2.0.0-1) unstable; urgency=low
 
   * Adds support for IPv6.
