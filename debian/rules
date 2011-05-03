@@ -1,9 +1,10 @@
 #!/usr/bin/make -f
+POSTGRESQL_VERSION=8.4
 #export DH_VERBOSE=1
 
-IPLIKE_VERSION=2.0.1
-POSTGRESQL_VERSION=8.4
 
+# Set up some useful variables
+IPLIKE_VERSION=2.0.2
 DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
 PGSQL_TYPE := `echo $(POSTGRESQL_VERSION) | sed -e 's,[^0-9]*,,g'`
 
