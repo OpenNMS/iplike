@@ -1,5 +1,5 @@
 #!/bin/sh
-# prerm script for iplike-pgsql84
+# prerm script for iplike-pgsql90
 #
 # see: dh_installdeb(1)
 
@@ -7,8 +7,8 @@ set -e
 
 case "$1" in
     remove)
-        /usr/sbin/update-alternatives --remove "iplike.so"         "/usr/lib/postgresql/8.4/lib/iplike.so"
-        /usr/sbin/update-alternatives --remove "install_iplike.sh" "/usr/sbin/install_iplike-84.sh"
+        /usr/sbin/update-alternatives --remove "iplike.so"         "/usr/lib/postgresql/9.0/lib/iplike.so"
+        /usr/sbin/update-alternatives --remove "install_iplike.sh" "/usr/sbin/install_iplike-90.sh"
     ;;
 esac
 

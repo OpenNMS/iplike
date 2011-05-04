@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for iplike-pgsql84
+# postinst script for iplike-pgsql90
 #
 # see: dh_installdeb(1)
 
@@ -19,7 +19,7 @@ set -e
 # the debian-policy package
 
 LOGFILE=/tmp/install_iplike.log
-POSTGRESQL_VERSION=8.4
+POSTGRESQL_VERSION=9.0
 PGSQL_TYPE=`echo $POSTGRESQL_VERSION | sed -e 's,[^0-9]*,,g'`
 PG_LIBDIR=`ls -1 -d /usr/lib*/postgresql/$POSTGRESQL_VERSION/lib`
 
