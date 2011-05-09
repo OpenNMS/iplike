@@ -19,9 +19,9 @@ set -e
 # the debian-policy package
 
 LOGFILE=/tmp/install_iplike.log
-POSTGRESQL_VERSION=9.0
-PGSQL_TYPE=`echo $POSTGRESQL_VERSION | sed -e 's,[^0-9]*,,g'`
-PG_LIBDIR=`ls -1 -d /usr/lib*/postgresql/$POSTGRESQL_VERSION/lib`
+POSTGRESQL_VERSION="#POSTGRESQL_VERSION#"
+PGSQL_TYPE="#PGSQL_TYPE#"
+PG_LIBDIR="#PG_LIBDIR#"
 
 case "$1" in
     configure)
@@ -29,13 +29,13 @@ case "$1" in
     /usr/sbin/update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PG_LIBDIR/iplike.so"                    $PGSQL_TYPE
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
-    	FAILED=0
-	/usr/sbin/install_iplike-$PGSQL_TYPE.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || FAILED=1
+        FAILED=0
+        /usr/sbin/install_iplike-$PGSQL_TYPE.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || FAILED=1
 
-	if [ $FAILED -eq 1 ]; then
-	    db_input high iplike/iplike-install-failed || true
-	    db_go || true
-	fi
+        if [ $FAILED -eq 1 ]; then
+            db_input high iplike/iplike-install-failed || true
+            db_go || true
+        fi
     fi
     ;;
 
