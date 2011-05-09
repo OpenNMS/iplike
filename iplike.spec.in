@@ -1,16 +1,9 @@
-%define rel @RELEASE@
-%define version @VERSION@
-%define pkgname @PACKAGE@
+%{!?rel:%define rel @RELEASE@%{?dist}}
+%{!?version:%define version @VERSION@}
+%{!?pkgname:%define pkgname @PACKAGE@}
+%{!?postgresql_dev:%define postgresql_dev postgresql-devel}
 
-%define _libdir %_prefix/lib
-
-%ifarch x86_64
-%define _libdir %_prefix/lib64
-%endif
-
-%ifarch s390x
-%define _libdir %_prefix/lib64
-%endif
+%define _libdir %(pg_config --pkglibdir)
 
 Name: %{pkgname}
 Version: %{version}
@@ -21,7 +14,7 @@ Summary: PostgreSQL complex IP Address text field query
 Source: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
-BuildRequires: postgresql-devel, gcc
+BuildRequires: %{postgresql_dev}, gcc
 Requires: sudo
 
 %description
@@ -36,7 +29,7 @@ on a text field.
 make
 
 %install
-%makeinstall
+make install DESTDIR="$RPM_BUILD_ROOT"
 
 %post
 

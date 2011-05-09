@@ -7,6 +7,7 @@ POSTGRESQL_VERSION=7.3
 IPLIKE_VERSION=2.0.2
 DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
 PGSQL_TYPE := `echo $(POSTGRESQL_VERSION) | sed -e 's,[^0-9]*,,g'`
+PG_LIBDIR := /usr/bli/postgresql/$(POSTGRESQL_VERSION)/lib
 
 #include /usr/share/cdbs/1/rules/tarball.mk
 include /usr/share/cdbs/1/rules/simple-patchsys.mk
@@ -22,6 +23,12 @@ ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 else
 	CFLAGS += -O2
 endif
+
+debian/postinst: debian/postinst.in
+	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $>
+
+debian/prerm: debian/prerm.in
+	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $>
 
 configure:
 	dh_testdir
