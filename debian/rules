@@ -7,7 +7,7 @@ POSTGRESQL_VERSION=8.4
 IPLIKE_VERSION=2.0.2
 DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
 PGSQL_TYPE := `echo $(POSTGRESQL_VERSION) | sed -e 's,[^0-9]*,,g'`
-PG_LIBDIR := /usr/bli/postgresql/$(POSTGRESQL_VERSION)/lib
+PG_LIBDIR := /usr/lib/postgresql/$(POSTGRESQL_VERSION)/lib
 
 #include /usr/share/cdbs/1/rules/tarball.mk
 include /usr/share/cdbs/1/rules/simple-patchsys.mk
