@@ -1,4 +1,4 @@
 usr/sbin
-usr/lib/postgresql/9.0/lib
-usr/share/doc/iplike-pgsql90
+usr/lib/postgresql/9.1/lib
+usr/share/doc/iplike-pgsql91
 usr/share/java/opennms

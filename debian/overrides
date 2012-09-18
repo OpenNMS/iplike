@@ -1,6 +1,6 @@
-iplike-pgsql90: no-shlibs-control-file usr/lib/iplike.so
-iplike-pgsql90: postinst-must-call-ldconfig usr/lib/iplike.so
-iplike-pgsql90: binary-without-manpage install_iplike.sh
-iplike-pgsql90: script-with-language-extension usr/sbin/install_iplike.sh
-iplike-pgsql90: no-debconf-config
-iplike-pgsql90: postinst-uses-db-input
+iplike-pgsql91: no-shlibs-control-file usr/lib/iplike.so
+iplike-pgsql91: postinst-must-call-ldconfig usr/lib/iplike.so
+iplike-pgsql91: binary-without-manpage install_iplike.sh
+iplike-pgsql91: script-with-language-extension usr/sbin/install_iplike.sh
+iplike-pgsql91: no-debconf-config
+iplike-pgsql91: postinst-uses-db-input
