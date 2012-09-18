@@ -1,5 +1,5 @@
 #!/bin/sh
-# prerm script for iplike-pgsql90
+# prerm script for iplike-pgsql92
 #
 # see: dh_installdeb(1)
 
