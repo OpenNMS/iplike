@@ -1,5 +1,5 @@
 AC_PREREQ(2.59)
-AC_INIT([iplike],[2.0.2])
+AC_INIT([iplike],[2.0.3])
 
 RELEASE=1
 AC_SUBST([RELEASE])
