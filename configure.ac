@@ -1,5 +1,5 @@
 AC_PREREQ(2.59)
-AC_INIT([iplike],[2.0.3])
+AC_INIT([iplike],[2.0.4])
 
 RELEASE=1
 AC_SUBST([RELEASE])
@@ -46,7 +46,7 @@ if test -z "$PGCONFIG"; then
 	AC_MSG_ERROR([PostgreSQL is required]);
 fi
 PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
-PGLIBS="-L'`${PGCONFIG} --libdir`' -lpq"
+PGLIBS="-L'`${PGCONFIG} --libdir`'"
 PSQL_BINDIR=`$PGCONFIG --bindir`
 PGPLUGINDIR=`"${PGCONFIG}" --pkglibdir`
 
