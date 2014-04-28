@@ -2,6 +2,8 @@ iplike-pgsql@PGSHORTVER@ (2.0.4-1) unstable; urgency=low
 
   * Packaging/linking updates.
 
+ -- Benjamin Reed <ranger@opennms.org>  Mon, 28 Apr 2014 11:56:00 -0400
+
 iplike-pgsql@PGSHORTVER@ (2.0.3-1) unstable; urgency=medium
 
   * Handle "DROP FUNCTION" properly with newer PostgreSQL versions.
