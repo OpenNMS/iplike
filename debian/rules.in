@@ -5,7 +5,7 @@ PGSQL_TYPE=@PGSHORTVER@
 
 
 # Set up some useful variables
-IPLIKE_VERSION=2.0.3
+IPLIKE_VERSION=@PACKAGE_VERSION@
 DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
 PG_LIBDIR := /usr/lib/postgresql/$(POSTGRESQL_VERSION)/lib
 
