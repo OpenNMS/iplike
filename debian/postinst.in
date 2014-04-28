@@ -25,8 +25,8 @@ PG_LIBDIR="#PG_LIBDIR#"
 
 case "$1" in
     configure)
-    /usr/sbin/update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PGSQL_TYPE.sh" $PGSQL_TYPE
-    /usr/sbin/update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PG_LIBDIR/iplike.so"                    $PGSQL_TYPE
+    update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PGSQL_TYPE.sh" $PGSQL_TYPE
+    update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PG_LIBDIR/iplike.so"                    $PGSQL_TYPE
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
         FAILED=0
