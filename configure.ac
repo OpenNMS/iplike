@@ -139,11 +139,10 @@ AC_SUBST([PGINCLUDES])
 AC_SUBST([PGLIBS])
 AC_SUBST([PSQL_BINDIR])
 AC_SUBST([PGPLUGINDIR])
-AC_SUBST([PGSHORTVER])
-AC_SUBST([PGLONGVER])
 
-AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh])
+AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh debian/setver.sh])
 
 AC_OUTPUT
 
-debian/setver.sh "$PGLONGVER" >/dev/null 2>&1 || :
+chmod a+x debian/setver.sh >/dev/null 2>&1 || :
+debian/setver.sh "$PGLONGVER" "$PACKAGE_VERSION" >/dev/null 2>&1 || :

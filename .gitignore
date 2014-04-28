@@ -32,4 +32,5 @@ debian/files
 debian/iplike-pgsql*
 debian/postinst
 debian/prerm
+debian/setver.sh
 debian/stamp-*
