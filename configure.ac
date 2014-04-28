@@ -50,6 +50,9 @@ PGLIBS="-L'`${PGCONFIG} --libdir`'"
 PSQL_BINDIR=`$PGCONFIG --bindir`
 PGPLUGINDIR=`"${PGCONFIG}" --pkglibdir`
 
+PGLONGVER="`${PGCONFIG} --version | sed -e 's,.* ,,' -e 's,^\([[0-9]]*\.[[0-9]]*\).*$,\1,'`"
+PGSHORTVER="`${PGCONFIG} --version | sed -e 's,.* ,,' -e 's,^\([[0-9]]*\)\.\([[0-9]]*\).*$,\1\2,'`"
+
 CPPFLAGS="$CPPFLAGS -DWIN32_CLIENT_ONLY"
 
 saved_CPPFLAGS="${CPPFLAGS}"
@@ -135,7 +138,9 @@ AC_SUBST([PGINCLUDES])
 AC_SUBST([PGLIBS])
 AC_SUBST([PSQL_BINDIR])
 AC_SUBST([PGPLUGINDIR])
+AC_SUBST([PGSHORTVER])
+AC_SUBST([PGLONGVER])
 
-AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh])
+AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh debian/changelog debian/control debian/dirs debian/overrides debian/rules])
 
 AC_OUTPUT

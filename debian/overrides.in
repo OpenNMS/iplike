@@ -1,0 +1,6 @@
+iplike-pgsql@PGSHORTVER@: no-shlibs-control-file usr/lib/iplike.so
+iplike-pgsql@PGSHORTVER@: postinst-must-call-ldconfig usr/lib/iplike.so
+iplike-pgsql@PGSHORTVER@: binary-without-manpage install_iplike.sh
+iplike-pgsql@PGSHORTVER@: script-with-language-extension usr/sbin/install_iplike.sh
+iplike-pgsql@PGSHORTVER@: no-debconf-config
+iplike-pgsql@PGSHORTVER@: postinst-uses-db-input
