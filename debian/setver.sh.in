@@ -12,14 +12,16 @@ if [ -z "$NEWVER" ]; then
 fi
 
 SHORTVER=`echo $NEWVER | sed -e 's,\.,,g'`
+IPLVER="@PACKAGE_VERSION@"
 
 echo "PostgreSQL version: $NEWVER"
 echo "Short version: $SHORTVER"
+echo "IPLIKE version: $IPLVER"
 
 for INFILE in $MYROOT/*.tmpl; do
 	OUTFILE=`echo $INFILE | sed -e 's,.tmpl$,,'`
 	echo "$INFILE -> $OUTFILE"
-	sed -e "s,@POSTGRESQL_VERSION@,${NEWVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" -. "s,@IPLIKE_VERSION@,@PACKAGE_VERSION@,g" "$INFILE" > "$OUTFILE"
+	sed -e "s,@POSTGRESQL_VERSION@,${NEWVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" -. "s,@IPLIKE_VERSION@,${IPLVER},g" "$INFILE" > "$OUTFILE"
 done
 
 chmod a+x "$MYROOT"/rules
