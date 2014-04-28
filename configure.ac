@@ -65,7 +65,7 @@ if test x"$HAVE_LONG_INT_64" = x"no" ; then
   PGAC_TYPE_64BIT_INT([long long int])
 fi
 
-AC_CHECK_HEADERS([windef.h fmgr.h])
+AC_CHECK_HEADERS([windef.h])
 AC_MSG_CHECKING(for postgres.h)
 AC_CACHE_VAL(onms_cv_postgres_h_good_without_undef,
   [

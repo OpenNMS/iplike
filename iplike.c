@@ -78,15 +78,15 @@
 # undef _FILE_OFFSET_BITS
 #endif /* UNDEF_FILE_OFFSET_BITS */
 #include <postgres.h>		/* PostgreSQL types */
-
-#ifdef HAVE_FMGR_H
-# include <fmgr.h>
-# ifdef PG_MODULE_MAGIC
-#  ifndef DLLIMPORT
-#   define DLLIMPORT
-#  endif
-   PG_MODULE_MAGIC;
+#include <fmgr.h>
+#ifdef PG_MODULE_MAGIC
+# ifndef DLLIMPORT
+#  define DLLIMPORT
 # endif
+# ifndef DLLEXPORT
+#  define DLLEXPORT
+# endif
+  PG_MODULE_MAGIC;
 #endif
 
 /**
