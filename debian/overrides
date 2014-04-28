@@ -1,6 +1,0 @@
-iplike-pgsql83: no-shlibs-control-file usr/lib/iplike.so
-iplike-pgsql83: postinst-must-call-ldconfig usr/lib/iplike.so
-iplike-pgsql83: binary-without-manpage install_iplike.sh
-iplike-pgsql83: script-with-language-extension usr/sbin/install_iplike.sh
-iplike-pgsql83: no-debconf-config
-iplike-pgsql83: postinst-uses-db-input

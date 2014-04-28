@@ -28,9 +28,14 @@ stamp-h1
 *.loT
 *.o
 *.cdbs-orig
+debian/changelog
+debian/control
+debian/dirs
 debian/files
 debian/iplike-pgsql*
+debian/overrides
 debian/postinst
 debian/prerm
+debian/rules
 debian/setver.sh
 debian/stamp-*
