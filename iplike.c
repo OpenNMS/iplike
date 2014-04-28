@@ -79,15 +79,13 @@
 #endif /* UNDEF_FILE_OFFSET_BITS */
 #include <postgres.h>		/* PostgreSQL types */
 
-#ifdef PG_VERSION_NUM
-# if PG_VERSION_NUM >= 80200
-#  include <fmgr.h>
-#  ifdef PG_MODULE_MAGIC
-#   ifndef DLLIMPORT
-#    define DLLIMPORT
-#   endif
-    PG_MODULE_MAGIC;
+#ifdef HAVE_FMGR_H
+# include <fmgr.h>
+# ifdef PG_MODULE_MAGIC
+#  ifndef DLLIMPORT
+#   define DLLIMPORT
 #  endif
+   PG_MODULE_MAGIC;
 # endif
 #endif
 
