@@ -1,4 +1,0 @@
-usr/sbin
-usr/lib/postgresql/@PGLONGVER@/lib
-usr/share/doc/iplike-pgsql@PGSHORTVER@
-usr/share/java/opennms

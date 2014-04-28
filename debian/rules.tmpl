@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
-POSTGRESQL_VERSION=@PGLONGVER@
-PGSQL_TYPE=@PGSHORTVER@
+POSTGRESQL_VERSION=@POSTGRESQL_VERSION@
+PGSQL_TYPE=@PGSQL_TYPE@
 #export DH_VERBOSE=1
 
 
@@ -24,11 +24,7 @@ else
 	CFLAGS += -O2
 endif
 
-debian/postinst: debian/postinst.in
-	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $@
-	chmod a+x $@
-
-debian/prerm: debian/prerm.in
+debian/%: debian/%.in
 	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $@
 	chmod a+x $@
 

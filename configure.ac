@@ -141,6 +141,8 @@ AC_SUBST([PGPLUGINDIR])
 AC_SUBST([PGSHORTVER])
 AC_SUBST([PGLONGVER])
 
-AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh debian/changelog debian/control debian/dirs debian/overrides debian/rules])
+AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh])
 
 AC_OUTPUT
+
+debian/setver.sh "$PGLONGVER" >/dev/null 2>&1 || :
