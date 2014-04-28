@@ -24,10 +24,6 @@ else
 	CFLAGS += -O2
 endif
 
-debian/%: debian/%.in
-	cat $< | sed -e 's,#POSTGRESQL_VERSION#,$(POSTGRESQL_VERSION),g' -e 's,#PGSQL_TYPE#,$(PGSQL_TYPE),g' -e 's,#PG_LIBDIR#,$(PG_LIBDIR),g' > $@
-	chmod a+x $@
-
 configure:
 	dh_testdir
 	# This handles building directly from the git repo
