@@ -20,3 +20,5 @@ for INFILE in $MYROOT/*.tmpl; do
 	echo "$INFILE -> $OUTFILE"
 	sed -e "s,@POSTGRESQL_VERSION@,${NEWVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" "$INFILE" > "$OUTFILE"
 done
+
+chmod a+x "$MYROOT"/rules
