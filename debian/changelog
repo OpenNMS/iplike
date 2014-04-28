@@ -1,3 +1,7 @@
+iplike-pgsql90 (2.0.4-1) unstable; urgency=low
+
+  * Packaging/linking updates.
+
 iplike-pgsql90 (2.0.3-1) unstable; urgency=medium
 
   * Handle "DROP FUNCTION" properly with newer PostgreSQL versions.
