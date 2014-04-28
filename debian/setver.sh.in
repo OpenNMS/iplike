@@ -21,7 +21,7 @@ echo "IPLIKE version: $IPLVER"
 for INFILE in $MYROOT/*.tmpl; do
 	OUTFILE=`echo $INFILE | sed -e 's,.tmpl$,,'`
 	echo "$INFILE -> $OUTFILE"
-	sed -e "s,@POSTGRESQL_VERSION@,${NEWVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" -. "s,@IPLIKE_VERSION@,${IPLVER},g" "$INFILE" > "$OUTFILE"
+	sed -e "s,@POSTGRESQL_VERSION@,${NEWVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" -e "s,@IPLIKE_VERSION@,${IPLVER},g" "$INFILE" > "$OUTFILE"
 done
 
 chmod a+x "$MYROOT"/rules
