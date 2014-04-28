@@ -1,5 +1,6 @@
+m4_include([version.m4])
 AC_PREREQ(2.59)
-AC_INIT([iplike],[2.0.4])
+AC_INIT([iplike], VERSION_NUMBER, [http://www.opennms.org])
 
 RELEASE=1
 AC_SUBST([RELEASE])
