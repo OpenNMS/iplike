@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MYDIR=`dirname $0`
-MYROOT=`cd $MYDIR; pwd`
+MYDIR="$(dirname "$0")"
+MYROOT="$(cd "$MYDIR" || exit; pwd)"
 
 NEWVER="$1"
 
@@ -11,7 +11,7 @@ if [ -z "$NEWVER" ]; then
 	exit 1
 fi
 
-SHORTVER=`echo $NEWVER | sed -e 's,\.,,g'`
+SHORTVER="$(echo "$NEWVER" | cut -d. -f1)"
 IPLVER="@PACKAGE_VERSION@"
 PG_LIBDIR="/usr/lib/postgresql/${NEWVER}/lib"
 
@@ -19,10 +19,15 @@ echo "PostgreSQL version: $NEWVER"
 echo "Short version: $SHORTVER"
 echo "IPLIKE version: $IPLVER"
 
+SUBSTVER="$NEWVER"
+if [ "$SHORTVER" -ge 10 ]; then
+	SUBSTVER="$SHORTVER"
+fi
+
 for INFILE in $MYROOT/*.tmpl; do
-	OUTFILE=`echo $INFILE | sed -e 's,.tmpl$,,'`
+	OUTFILE="$(echo "$INFILE" | sed -e 's,.tmpl$,,')"
 	echo "$INFILE -> $OUTFILE"
-	sed -e "s,@POSTGRESQL_VERSION@,${NEWVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" -e "s,@IPLIKE_VERSION@,${IPLVER},g" -e "s,@PG_LIBDIR@,${PG_LIBDIR},g"  "$INFILE" > "$OUTFILE"
+	sed -e "s,@POSTGRESQL_VERSION@,${SUBSTVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" -e "s,@IPLIKE_VERSION@,${IPLVER},g" -e "s,@PG_LIBDIR@,${PG_LIBDIR},g"  "$INFILE" > "$OUTFILE"
 done
 
 chmod a+x "$MYROOT"/rules
