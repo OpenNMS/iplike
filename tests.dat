@@ -52,6 +52,7 @@ fe80:0000:0000:0000:aaaa:bbbb:cccc:dddd	*:*:*:0:*:*:*:*%4	false
 fe80:0000:0000:0000:aaaa:bbbb:cccc:dddd	*:*:*:*:*:bbbb:*:*	true
 fe80:0000:0000:0000:aaaa:bbbb:cccc:dddd%4	*:*:*:*:*:bbbb:*:*	true
 fe80:0000:0000:0000:aaaa:bbbb:cccc:dddd%4	*:*:*:*:*:bbbb:*:*%4	true
+fe80:0000:0000:0000:aaaa:bbbb:cccc:dddd%4	*:*:*:*:*:bbbb:*:*%5	false
 fe80:0000:0000:0000:aaaa:bbbb:cccc:dddd	*:*:*:*:*:bbbb:*:*%4	false
 
 fe80:0000:0000:0000:aaaa:bbbb:cccc:dddd	*:*:*:*:*:bbb0-bbbf:*:*	true
