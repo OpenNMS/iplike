@@ -22,9 +22,6 @@ AC_PROG_INSTALL
 ONMS_CHECK_SUNCC
 ONMS_SET_CC_WARNING_CFLAGS
 
-AM_RPM_INIT
-AM_CONDITIONAL(MAKE_RPMS, test x$make_rpms = xtrue)
-
 dnl
 dnl lovingly stolen from postgis' autoconf macros
 dnl
@@ -131,14 +128,31 @@ AS_IF([test "x$onms_cv_postgres_h_good_without_undef" != "xyes"],
     )
   ]
 )
-
 CPPFLAGS="${saved_CPPFLAGS}"
+
+PG_BUNDLE_LOADER=""
+CLI_LDFLAGS=""
+
+AX_CHECK_LINK_FLAG(["-Wl,-bundle_loader,${PSQL_BINDIR}/postgres"],[
+  PG_BUNDLE_LOADER='-Wl,-bundle_loader,$(PSQL_BINDIR)/postgres'
+],[],[-Wl,-bundle])
+AX_CHECK_LINK_FLAG([-Wl,-U,_pg_detoast_datum_packed],[
+  CLI_LDFLAGS="$CLI_LDFLAGS -Wl,-U,_pg_detoast_datum_packed"
+])
+AX_CHECK_LINK_FLAG([-Wl,--unresolved-symbols=ignore-in-object-files],[
+  CLI_LDFLAGS="$CLI_LDFLAGS -Wl,--unresolved-symbols=ignore-in-object-files"
+])
 
 AC_SUBST([PGCONFIG])
 AC_SUBST([PGINCLUDES])
 AC_SUBST([PGLIBS])
 AC_SUBST([PSQL_BINDIR])
 AC_SUBST([PGPLUGINDIR])
+AC_SUBST([PG_BUNDLE_LOADER])
+AC_SUBST([CLI_LDFLAGS])
+
+AM_RPM_INIT
+AM_CONDITIONAL(MAKE_RPMS, test x$make_rpms = xtrue)
 
 AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh debian/setver.sh])
 

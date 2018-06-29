@@ -1056,7 +1056,7 @@ const int getIPv6RangeInfo(const char *p, int len, OctetRangeArray_t *const dest
  *	Returns true if it matches, false if it does not
  *
  */
-const bool iplike(const text *const value, const text *const rule)
+const bool _iplike(const text *const value, const text *const rule)
 {
 	bool    rcode = false;		/* the return code */
 	int     i,j;			/* loop variables */
@@ -1066,8 +1066,7 @@ const bool iplike(const text *const value, const text *const rule)
 	OctetRangeArray_t ranges[9];
 	
 	// basic sanity check
-	if(value == NULL || rule == NULL)
-		return false;
+	if(value == NULL || rule == NULL) return false;
 	
 	// Initialize the arrays
 	for(i = 0; i < 9; i++)
@@ -1193,3 +1192,27 @@ const bool iplike(const text *const value, const text *const rule)
 	
 	return rcode;
 }
+
+/**
+ * Define the actual "iplike" function.  We have to do
+ * this because the behavior is different depending on
+ * PostgreSQL version, but we still want the "iplike"
+ * command-line tool to always use the _iplike()
+ * function directly.
+ */
+#ifdef PG_FUNCTION_INFO_V1
+PG_FUNCTION_INFO_V1(iplike);
+Datum iplike(PG_FUNCTION_ARGS)
+{
+	const text *const value = PG_GETARG_TEXT_PP(0);
+	const text *const rule = PG_GETARG_TEXT_PP(1);
+	const bool rcode = _iplike(value, rule);
+	PG_RETURN_BOOL(rcode);
+}
+#else
+const bool iplike(const text *const value, const text *const rule)
+{
+	return _iplike(text, rule);
+}
+#endif
+

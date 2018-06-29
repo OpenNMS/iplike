@@ -10,13 +10,14 @@ plugin_LTLIBRARIES = iplike.la
 
 iplike_la_SOURCES =
 iplike_la_LIBADD = libiplike_common.la
-iplike_la_LDFLAGS = -module -avoid-version -no-undefined
+iplike_la_LDFLAGS = -module -avoid-version -no-undefined $(PG_BUNDLE_LOADER)
 
 sbin_SCRIPTS = install_iplike.sh
 
 check_PROGRAMS = iplike
 iplike_SOURCES = iplike-cmd.c
 iplike_LDADD = libiplike_common.la
+iplike_LDFLAGS = $(CLI_LDFLAGS)
 
 TESTS = tests.sh
 

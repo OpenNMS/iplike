@@ -11,7 +11,7 @@
 #define SET_VARSIZE(v,l) (VARATT_SIZEP(v) = (l)) 
 #endif
 
-bool iplike(text *value, text *rule);
+bool _iplike(text *value, text *rule);
 
 int main(int argc, char **argv)
 {
@@ -31,5 +31,5 @@ int main(int argc, char **argv)
 	strcpy(VARDATA(arg1), argv[1]);
 	strcpy(VARDATA(arg2), argv[2]);
 	
-	return (iplike(arg1, arg2) == true ? 0 : 1);
+	return (_iplike(arg1, arg2) == true ? 0 : 1);
 }
