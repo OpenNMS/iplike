@@ -1,11 +1,11 @@
 #!/bin/sh
 
-[ -z "$PG_DATABASE" ] && PG_DATABASE="opennms"
-[ -z "$PG_USER"     ] && PG_USER="postgres"
-[ -z "$PG_HOST"     ] && PG_HOST="localhost"
-[ -z "$PG_PORT"     ] && PG_PORT="5432"
-[ -z "$PG_PSQL"     ] && PG_PSQL="@PSQL_BINDIR@/psql"
-[ -z "$PG_LIBDIR"   ] && PG_LIBDIR="@PGPLUGINDIR@"
+[ -z "$PG_DATABASE"  ] && PG_DATABASE="opennms"
+[ -z "$PG_USER"      ] && PG_USER="postgres"
+[ -z "$PG_HOST"      ] && PG_HOST="localhost"
+[ -z "$PG_PORT"      ] && PG_PORT="5432"
+[ -z "$PG_PSQL"      ] && PG_PSQL="@PSQL_BINDIR@/psql"
+[ -z "$PG_PLUGINDIR" ] && PG_PLUGINDIR="@PGPLUGINDIR@"
 
 do_error() {
 	echo "Cannot install iplike: $@"
@@ -19,7 +19,7 @@ usage: $0 [-h] [-d database] [-u pg_user] [-x pg_host] [-p pg_port] [-s sudo_use
 	-h   this help
 	-c   the PostgreSQL \`psql\` command to run (default: "$PG_PSQL")
 	-d   the PostgreSQL database to insert the function into (default: "$PG_DATABASE")
-	-l   the PostgreSQL library directory (default: "$PG_LIBDIR")
+	-l   the PostgreSQL plugin library directory (default: "$PG_PLUGINDIR")
 	-u   the PostgreSQL user to log in as (default: "$PG_USER")
 	-x   the PostgreSQL server name to connect to (default: "$PG_HOST")
 	-p   the PostgreSQL server port to connect to (default: "$PG_PORT")
@@ -36,7 +36,7 @@ while getopts hc:d:l:u:x:p:s: ARG; do
 		h) do_help ;;
 		c) PG_PSQL="$OPTARG" ;;
 		d) PG_DATABASE="$OPTARG" ;;
-		l) PG_LIBDIR="$OPTARG" ;;
+		l) PG_PLUGINDIR="$OPTARG" ;;
 		u) PG_USER="$OPTARG" ;;
 		x) PG_HOST="$OPTARG" ;;
 		p) PG_PORT="$OPTARG" ;;
@@ -44,14 +44,14 @@ while getopts hc:d:l:u:x:p:s: ARG; do
 	esac
 done
 
-if [ ! -r "$PG_LIBDIR/iplike.la" ]; then
+if [ ! -r "$PG_PLUGINDIR/iplike.la" ]; then
 	do_error "unable to locate iplike.la"
 fi
 
-. "$PG_LIBDIR/iplike.la"
+. "$PG_PLUGINDIR/iplike.la"
 
-if [ ! -f "$PG_LIBDIR/$dlname" ]; then
-	do_error "$PG_LIBDIR/$dlname does not exist"
+if [ ! -f "$PG_PLUGINDIR/$dlname" ]; then
+	do_error "$PG_PLUGINDIR/$dlname does not exist"
 fi
 
 if [ ! -x "$PG_PSQL" ]; then
@@ -64,7 +64,7 @@ PG_COMMAND="$PG_COMMAND $PG_PSQL"
 [ -n "$PG_PORT"   ] && PG_COMMAND="$PG_COMMAND -p $PG_PORT"
 PG_COMMAND="$PG_COMMAND $PG_DATABASE"
 
-CREATE="CREATE OR REPLACE FUNCTION iplike(i_ipaddress text,i_rule text) RETURNS bool AS '$PG_LIBDIR/$dlname' LANGUAGE 'c' WITH(isstrict);"
+CREATE="CREATE OR REPLACE FUNCTION iplike(i_ipaddress text,i_rule text) RETURNS bool AS '$PG_PLUGINDIR/$dlname' LANGUAGE 'c' WITH(isstrict);"
 
 if [ -n "$SUDO_USER" ]; then
 	if [ -x /usr/bin/sudo ]; then

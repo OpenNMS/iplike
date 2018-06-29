@@ -45,6 +45,7 @@ if test -z "$PGCONFIG"; then
 fi
 PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
 PGLIBS="-L'`${PGCONFIG} --libdir`'"
+PGLIBDIR="`${PGCONFIG} --libdir`"
 PSQL_BINDIR=`$PGCONFIG --bindir`
 PGPLUGINDIR=`"${PGCONFIG}" --pkglibdir`
 
@@ -146,6 +147,7 @@ AX_CHECK_LINK_FLAG([-Wl,--unresolved-symbols=ignore-in-object-files],[
 AC_SUBST([PGCONFIG])
 AC_SUBST([PGINCLUDES])
 AC_SUBST([PGLIBS])
+AC_SUBST([PGLIBDIR])
 AC_SUBST([PSQL_BINDIR])
 AC_SUBST([PGPLUGINDIR])
 AC_SUBST([PG_BUNDLE_LOADER])

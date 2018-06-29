@@ -7,7 +7,8 @@ PGSQL_TYPE=@PGSQL_TYPE@
 # Set up some useful variables
 IPLIKE_VERSION=@IPLIKE_VERSION@
 DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
-PG_LIBDIR := /usr/lib/postgresql/$(POSTGRESQL_VERSION)/lib
+PGLIBDIR=@PG_LIBDIR@
+PGPLUGINDIR=@PG_PLUGINDIR@
 
 #include /usr/share/cdbs/1/rules/tarball.mk
 include /usr/share/cdbs/1/rules/simple-patchsys.mk

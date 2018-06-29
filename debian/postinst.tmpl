@@ -21,12 +21,12 @@ set -e
 LOGFILE=/tmp/install_iplike.log
 POSTGRESQL_VERSION="@POSTGRESQL_VERSION@"
 PGSQL_TYPE="@PGSQL_TYPE@"
-PG_LIBDIR="@PG_LIBDIR@"
+PGPLUGINDIR="@PG_PLUGINDIR@"
 
 case "$1" in
     configure)
     update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PGSQL_TYPE.sh" $PGSQL_TYPE
-    update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PG_LIBDIR/iplike.so"                    $PGSQL_TYPE
+    update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PGPLUGINDIR/iplike.so"                  $PGSQL_TYPE
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
         FAILED=0
