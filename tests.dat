@@ -1,3 +1,5 @@
+### IF YOU UPDATE THESE TESTS, UPDATE IPLikeCoverageIT IN THE OPENNMS CODEBASE AS WELL ###
+
 # value		rule			true/false
 1.2.3.4		1.2.3.4			true
 1.2.3.4		1.2.3.5			false
