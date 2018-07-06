@@ -7,6 +7,7 @@ schema or need more control over how addresses are stored.
 IPLIKE is a PostgreSQL plugin for doing wildcard-like IP address
 matching using a simple rule grammar.
 
+
 # Building from Source
 
 ## Preparing a Git Checkout for Building
@@ -37,14 +38,41 @@ If your PostgreSQL is in a non-standard location, you can compile
 against it by passing `--with-pgsql=/path/to/pg_config` to the
 `./configure` command.
 
-## Installing IPLIKE to PostgreSQL
+## Creating RPM Packages
+
+If RPM is detected, the source build will also have support for
+building RPM packages.  Just run:
+
+```
+./configure
+make rpm
+```
+
+## Creating Debian/Ubuntu Packages
+
+Debian IPLIKE packages are named to match the PostgreSQL version
+they are built against, so that multiple IPLIKE packages can
+be installed at the same time (`iplike-pgsql9.5`, `iplike-pgsql10`,
+and so on).
+
+For this reason, you first must run `configure` before doing the
+normal Debian packaging process.
+
+```
+./configure
+dpkg-buildpackage
+```
+
+
+# Installing IPLIKE to PostgreSQL
 
 You should be able to run the `install_iplike.sh` script to insert
 IPLIKE into your database.  By default it will associate it with
 a database called `opennms`, but you can choose a different database
 by passing the `-d` flag (eg, `-d template1`).
 
-## Using IPLIKE
+
+# Using IPLIKE
 
 IPLIKE uses a very flexible search format, allowing you to separate
 the octets (fields) of an IPv4 or IPv6 address into specific searches.
@@ -52,7 +80,7 @@ An asterisk (*) in place of any octet matches any value for that octet.
 Ranges are indicated by two numbers separated by a dash (-),
 and commas are used for lists of matching octets.
 
-### Example Queries
+## Example Queries
 
 Match all addresses from 192.168.0.0 through 192.168.255.255:
 
