@@ -11,6 +11,7 @@ if [ -z "$NEWVER" ]; then
 	exit 1
 fi
 
+TYPEVER="$(echo "$NEWVER" | sed -e 's,\.,,g')"
 SHORTVER="$(echo "$NEWVER" | cut -d. -f1)"
 IPLVER="@PACKAGE_VERSION@"
 PG_LIBDIR="@PGLIBDIR@"
@@ -22,13 +23,14 @@ echo "IPLIKE version: $IPLVER"
 
 SUBSTVER="$NEWVER"
 if [ "$SHORTVER" -ge 10 ]; then
+	TYPEVER="$SHORTVER"
 	SUBSTVER="$SHORTVER"
 fi
 
 for INFILE in "$MYROOT"/*.tmpl; do
 	OUTFILE="$(echo "$INFILE" | sed -e 's,.tmpl$,,')"
 	echo "$INFILE -> $OUTFILE"
-	sed -e "s,@POSTGRESQL_VERSION@,${SUBSTVER},g" -e "s,@PGSQL_TYPE@,${SHORTVER},g" -e "s,@IPLIKE_VERSION@,${IPLVER},g" -e "s,@PG_LIBDIR@,${PG_LIBDIR},g" -e "s,@PG_PLUGINDIR@,${PG_PLUGINDIR},g" "$INFILE" > "$OUTFILE"
+	sed -e "s,@POSTGRESQL_VERSION@,${SUBSTVER},g" -e "s,@PGSQL_TYPE@,${TYPEVER},g" -e "s,@IPLIKE_VERSION@,${IPLVER},g" -e "s,@PG_LIBDIR@,${PG_LIBDIR},g" -e "s,@PG_PLUGINDIR@,${PG_PLUGINDIR},g" "$INFILE" > "$OUTFILE"
 done
 
 chmod a+x "$MYROOT"/rules
