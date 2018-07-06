@@ -1202,10 +1202,17 @@ const bool _iplike(const text *const value, const text *const rule)
  */
 #ifdef PG_FUNCTION_INFO_V1
 PG_FUNCTION_INFO_V1(iplike);
+
+#ifdef PG_GETARG_TEXT_PP
+#define IPLIKE_GETARG_TEXT PG_GETARG_TEXT_PP
+#else
+#define IPLIKE_GETARG_TEXT PG_GETARG_TEXT_P
+#endif
+
 Datum iplike(PG_FUNCTION_ARGS)
 {
-	const text *const value = PG_GETARG_TEXT_PP(0);
-	const text *const rule = PG_GETARG_TEXT_PP(1);
+	const text *const value = IPLIKE_GETARG_TEXT(0);
+	const text *const rule = IPLIKE_GETARG_TEXT(1);
 	const bool rcode = _iplike(value, rule);
 	PG_RETURN_BOOL(rcode);
 }
