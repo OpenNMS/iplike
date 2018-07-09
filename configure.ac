@@ -137,8 +137,8 @@ CLI_LDFLAGS=""
 AX_CHECK_LINK_FLAG(["-Wl,-bundle_loader,${PSQL_BINDIR}/postgres"],[
   PG_BUNDLE_LOADER='-Wl,-bundle_loader,$(PSQL_BINDIR)/postgres'
 ],[],[-Wl,-bundle])
-AX_CHECK_LINK_FLAG([-Wl,-U,_pg_detoast_datum_packed],[
-  CLI_LDFLAGS="$CLI_LDFLAGS -Wl,-U,_pg_detoast_datum_packed"
+AX_CHECK_LINK_FLAG([-Wl,-U,_pg_detoast_datum_packed -Wl,-U,_text_to_cstring],[
+  CLI_LDFLAGS="$CLI_LDFLAGS -Wl,-U,_pg_detoast_datum_packed -Wl,-U,_text_to_cstring"
 ])
 AX_CHECK_LINK_FLAG([-Wl,--unresolved-symbols=ignore-in-object-files],[
   CLI_LDFLAGS="$CLI_LDFLAGS -Wl,--unresolved-symbols=ignore-in-object-files"

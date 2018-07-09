@@ -77,8 +77,11 @@
 #ifdef UNDEF_FILE_OFFSET_BITS
 # undef _FILE_OFFSET_BITS
 #endif /* UNDEF_FILE_OFFSET_BITS */
+
 #include <postgres.h>		/* PostgreSQL types */
 #include <fmgr.h>
+#include <utils/builtins.h>
+
 #ifdef PG_MODULE_MAGIC
 # ifndef DLLIMPORT
 #  define DLLIMPORT
@@ -1056,7 +1059,7 @@ const int getIPv6RangeInfo(const char *p, int len, OctetRangeArray_t *const dest
  *	Returns true if it matches, false if it does not
  *
  */
-const bool _iplike(const text *const value, const text *const rule)
+const bool _iplike(const char *value, const char *rule)
 {
 	bool    rcode = false;		/* the return code */
 	int     i,j;			/* loop variables */
@@ -1082,10 +1085,7 @@ const bool _iplike(const text *const value, const text *const rule)
 	}
 	
 	// Decode the address
-	rcode = (convertIP((const char *)VARDATA(value),
-			   VARSIZE(value)-VARHDRSZ, 
-			   octets) == 0 
-		 ? true : false);
+	rcode = (convertIP(value, strlen(value), octets) == 0 ? true : false);
 	if(rcode == false)
 	{
 		// Free the allocated ranges
@@ -1109,13 +1109,10 @@ const bool _iplike(const text *const value, const text *const rule)
 	);
 	*/
 	
-	// printf("\nProcessing rule: %s %s\n", (const char *)VARDATA(value), (const char *)VARDATA(rule));
+	// printf("\nProcessing rule: %s %s\n", value, rule);
 	
 	// Decode the filter rule
-	rcode = (getRangeInfo((const char *)VARDATA(rule), 
-			      VARSIZE(rule)-VARHDRSZ, 
-			      ranges) == 0 
-		 ? true : false); 
+	rcode = (getRangeInfo(rule, strlen(rule), ranges) == 0 ? true : false); 
 	if(rcode == false)
 	{
 		// Free the allocated ranges
@@ -1129,7 +1126,7 @@ const bool _iplike(const text *const value, const text *const rule)
 	for (i = 0; i < 9; i++) {
 		char rangeString[255];
 		getOctetRangeArrayString(ranges[i], rangeString);
-		printf("Rules[%d]:  %s\n", i, rangeString);
+		// printf("Rules[%d]:  %s\n", i, rangeString);
 	}
 	*/
 	
@@ -1200,7 +1197,6 @@ const bool _iplike(const text *const value, const text *const rule)
  * command-line tool to always use the _iplike()
  * function directly.
  */
-#ifdef PG_FUNCTION_INFO_V1
 PG_FUNCTION_INFO_V1(iplike);
 
 #ifdef PG_GETARG_TEXT_PP
@@ -1213,13 +1209,6 @@ Datum iplike(PG_FUNCTION_ARGS)
 {
 	const text *const value = IPLIKE_GETARG_TEXT(0);
 	const text *const rule = IPLIKE_GETARG_TEXT(1);
-	const bool rcode = _iplike(value, rule);
+	const bool rcode = _iplike(text_to_cstring(value), text_to_cstring(rule));
 	PG_RETURN_BOOL(rcode);
 }
-#else
-const bool iplike(const text *const value, const text *const rule)
-{
-	return _iplike(text, rule);
-}
-#endif
-
