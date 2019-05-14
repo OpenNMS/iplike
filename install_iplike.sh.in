@@ -64,7 +64,7 @@ PG_COMMAND="$PG_COMMAND $PG_PSQL"
 [ -n "$PG_PORT"   ] && PG_COMMAND="$PG_COMMAND -p $PG_PORT"
 PG_COMMAND="$PG_COMMAND $PG_DATABASE"
 
-CREATE="CREATE OR REPLACE FUNCTION iplike(i_ipaddress text,i_rule text) RETURNS bool AS '$PG_PLUGINDIR/$dlname' LANGUAGE 'c' WITH(isstrict);"
+CREATE="CREATE OR REPLACE FUNCTION iplike(i_ipaddress text,i_rule text) RETURNS bool AS '$PG_PLUGINDIR/$dlname' LANGUAGE 'c' RETURNS NULL ON NULL INPUT;"
 
 if [ -n "$SUDO_USER" ]; then
 	if [ -x /usr/bin/sudo ]; then
