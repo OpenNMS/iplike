@@ -17,7 +17,7 @@ sbin_SCRIPTS = install_iplike.sh
 check_PROGRAMS = iplike
 iplike_SOURCES = iplike-cmd.c
 iplike_LDADD = libiplike_common.la
-iplike_LDFLAGS = $(CLI_LDFLAGS)
+iplike_LDFLAGS = $(CLI_LDFLAGS) -all-static
 
 TESTS = tests.sh
 
