@@ -5,7 +5,7 @@ noinst_LTLIBRARIES = libiplike_common.la
 libiplike_common_la_SOURCES = iplike.c
 libiplike_common_la_LDFLAGS = $(PGLIBS)
 
-plugindir = @PGPLUGINDIR@
+plugindir = @PG_PLUGINDIR@
 plugin_LTLIBRARIES = iplike.la
 
 iplike_la_SOURCES =
@@ -34,8 +34,10 @@ EXTRA_DIST += iplike.spec
 
 $(RPM_TARGET): $(DISTFILES)
 	${MAKE} dist
-	-mkdir -p $(RPM_DIR)/SRPMS
+	-mkdir -p "$(SRPM_DIR)"
+	-mkdir -p "$(RPM_SOURCE_DIR)"
 	-mkdir -p `dirname $(RPM_TARGET)`
-	$(RPMBUILD_PROG) $(RPM_ARGS) $(RPM_TARBALL)
+	-install -c -m 644 "$(RPM_TARBALL)" "$(RPM_SOURCE_DIR)/"
+	$(RPMBUILD_PROG) -ba --target="$(RPM_ARCH)" $(RPM_EXTRA_ARGS) iplike.spec
 	@echo "$(RPM_TARGET) created"
 endif

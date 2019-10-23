@@ -6,13 +6,13 @@
 set -e
 
 POSTGRESQL_VERSION="@POSTGRESQL_VERSION@"
-PGSQL_TYPE="@PGSQL_TYPE@"
-PGPLUGINDIR="@PG_PLUGINDIR@"
+PG_TYPE_VERSION="@PG_TYPE_VERSION@"
+PG_PLUGINDIR="@PG_PLUGINDIR@"
 
 case "$1" in
     remove)
-        update-alternatives --remove "iplike.so"         "${PGPLUGINDIR}/iplike.so"
-        update-alternatives --remove "install_iplike.sh" "/usr/sbin/install_iplike-${PGSQL_TYPE}.sh"
+        update-alternatives --remove "iplike.so"         "${PG_PLUGINDIR}/iplike.so"
+        update-alternatives --remove "install_iplike.sh" "/usr/sbin/install_iplike-${PG_TYPE_VERSION}.sh"
     ;;
 esac
 

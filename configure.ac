@@ -27,7 +27,7 @@ dnl lovingly stolen from postgis' autoconf macros
 dnl
 
 PGCONFIG=
-AC_ARG_WITH(pgsql, 
+AC_ARG_WITH(pgsql,
 [  --with-pgsql[[=ARG]]      build for a specific pgsql version
                           [[ARG=path to pg_config]]],
 	if test "$with_pgsql" != "no" -a "$with_pgsql" != "yes"; then
@@ -47,10 +47,26 @@ PGINCLUDES="-I`${PGCONFIG} --includedir` -I`${PGCONFIG} --includedir-server`"
 PGLIBS="-L'`${PGCONFIG} --libdir`'"
 PGLIBDIR="`${PGCONFIG} --libdir`"
 PSQL_BINDIR=`$PGCONFIG --bindir`
-PGPLUGINDIR=`"${PGCONFIG}" --pkglibdir`
 
-PGLONGVER="`${PGCONFIG} --version | sed -e 's,.* ,,' -e 's,^\([[0-9]]*\.[[0-9]]*\).*$,\1,'`"
-PGSHORTVER="`${PGCONFIG} --version | sed -e 's,.* ,,' -e 's,^\([[0-9]]*\)\.\([[0-9]]*\).*$,\1\2,'`"
+AC_MSG_CHECKING([for PostgreSQL version])
+PG_VERSION="`${PGCONFIG} --version | sed -e 's,^.* ,,' -e 's, *$,,'`"
+AC_MSG_RESULT([$PG_VERSION])
+
+AC_MSG_CHECKING([for PostgreSQL major version])
+PG_MAJOR_VERSION="`echo ${PG_VERSION} | awk -F. '{$NF=""}1' | sed -e 's, *$,,' -e 's, ,.,g'`"
+AC_MSG_RESULT([$PG_MAJOR_VERSION])
+
+AC_MSG_CHECKING([for PostgreSQL package version])
+PG_TYPE_VERSION="`echo ${PG_MAJOR_VERSION} | sed -e 's,\.,,'`"
+AC_MSG_RESULT([$PG_TYPE_VERSION])
+
+AC_ARG_VAR(PG_PLUGINDIR, [override the directory the plugin is installed to])
+
+AC_MSG_CHECKING([for the location to put the plugin library file])
+if test x"$PG_PLUGINDIR" = "x"; then
+	PG_PLUGINDIR=`"${PGCONFIG}" --pkglibdir`
+fi
+AC_MSG_RESULT([$PG_PLUGINDIR])
 
 CPPFLAGS="$CPPFLAGS -DWIN32_CLIENT_ONLY"
 
@@ -101,16 +117,16 @@ AS_IF([test "x$onms_cv_postgres_h_good_without_undef" != "xyes"],
           #undef PACKAGE_STRING
           #undef PACKAGE_TARNAME
           #undef PACKAGE_VERSION
-    
+
           #ifdef HAVE_WINDEF_H
           #include <winsock2.h>
           #include <windef.h>
           #endif
 
           #include <ctype.h>
-    
+
           #undef _FILE_OFFSET_BITS
-    
+
           #include <postgres.h>
         ],
         [],
@@ -149,16 +165,27 @@ AC_SUBST([PGINCLUDES])
 AC_SUBST([PGLIBS])
 AC_SUBST([PGLIBDIR])
 AC_SUBST([PSQL_BINDIR])
-AC_SUBST([PGPLUGINDIR])
+AC_SUBST([PG_PLUGINDIR])
 AC_SUBST([PG_BUNDLE_LOADER])
+AC_SUBST([PG_VERSION])
+AC_SUBST([PG_MAJOR_VERSION])
+AC_SUBST([PG_TYPE_VERSION])
 AC_SUBST([CLI_LDFLAGS])
 
 AM_RPM_INIT
 AM_CONDITIONAL(MAKE_RPMS, test x$make_rpms = xtrue)
 
-AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh debian/setver.sh])
+AC_CONFIG_FILES([Makefile iplike.spec install_iplike.sh])
 
 AC_OUTPUT
 
-chmod a+x debian/setver.sh >/dev/null 2>&1 || :
-debian/setver.sh "$PGLONGVER" "$PACKAGE_VERSION" >/dev/null 2>&1 || :
+for INFILE in debian/*.tmpl; do
+	OUTFILE="$(echo "$INFILE" | sed -e 's,.tmpl$,,')"
+	echo "translating $INFILE to $OUTFILE"
+	sed -e "s,@POSTGRESQL_VERSION@,${PG_MAJOR_VERSION},g" \
+		-e "s,@PG_TYPE_VERSION@,${PG_TYPE_VERSION},g" \
+		-e "s,@IPLIKE_VERSION@,${PACKAGE_VERSION},g" \
+		-e "s,@PG_LIBDIR@,${PG_LIBDIR},g" \
+		-e "s,@PG_PLUGINDIR@,${PG_PLUGINDIR},g" \
+		"$INFILE" > "$OUTFILE"
+done

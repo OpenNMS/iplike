@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 POSTGRESQL_VERSION=@POSTGRESQL_VERSION@
-PGSQL_TYPE=@PGSQL_TYPE@
+PG_TYPE_VERSION=@PG_TYPE_VERSION@
 #export DH_VERBOSE=1
 
 
@@ -8,7 +8,7 @@ PGSQL_TYPE=@PGSQL_TYPE@
 IPLIKE_VERSION=@IPLIKE_VERSION@
 DEB_TAR_SRCDIR := iplike-$(IPLIKE_VERSION)
 PGLIBDIR=@PG_LIBDIR@
-PGPLUGINDIR=@PG_PLUGINDIR@
+PG_PLUGINDIR=@PG_PLUGINDIR@
 
 #include /usr/share/cdbs/1/rules/tarball.mk
 include /usr/share/cdbs/1/rules/simple-patchsys.mk
@@ -58,10 +58,10 @@ binary-arch: build install debian/postinst debian/prerm
 #	dh_installcron
 #	dh_installinfo
 	# Lintian overrides
-	mv $(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/sbin/install_iplike.sh $(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/sbin/install_iplike-$(PGSQL_TYPE).sh
-	mkdir -p -m 755 $(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/share/lintian/overrides
+	mv $(CURDIR)/debian/iplike-pgsql$(PG_TYPE_VERSION)/usr/sbin/install_iplike.sh $(CURDIR)/debian/iplike-pgsql$(PG_TYPE_VERSION)/usr/sbin/install_iplike-$(PG_TYPE_VERSION).sh
+	mkdir -p -m 755 $(CURDIR)/debian/iplike-pgsql$(PG_TYPE_VERSION)/usr/share/lintian/overrides
 	install -m 644 $(CURDIR)/debian/overrides \
-		$(CURDIR)/debian/iplike-pgsql$(PGSQL_TYPE)/usr/share/lintian/overrides/libiplike-pgsql$(PGSQL_TYPE)
+		$(CURDIR)/debian/iplike-pgsql$(PG_TYPE_VERSION)/usr/share/lintian/overrides/libiplike-pgsql$(PG_TYPE_VERSION)
 	find debian ! -type d | sort -u
 	dh_installman
 	dh_link

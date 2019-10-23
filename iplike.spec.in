@@ -1,35 +1,40 @@
 %{!?rel:%define rel @RELEASE@%{?dist}}
-%{!?version:%define version @VERSION@}
-%{!?pkgname:%define pkgname @PACKAGE@}
+%{!?ver:%define ver @VERSION@}
+%{!?pkgname:%define pkgname @PACKAGE@-pgsql@PG_TYPE_VERSION@}
 %{!?postgresql_dev:%define postgresql_dev postgresql-devel}
 
-%define _libdir %(pg_config --pkglibdir)
+%define srcdir @PACKAGE@-%{ver}
+%define install_iplike install_iplike-@PG_TYPE_VERSION@.sh
 
 Name: %{pkgname}
-Version: %{version}
+Version: %{ver}
 Release: %{rel}
 License: GPL
 Group: Applications/Databases
 Summary: PostgreSQL complex IP Address text field query
-Source: %{name}-%{version}.tar.gz
+Source: %{srcdir}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 BuildRequires: %{postgresql_dev}, gcc, make
 Requires: sudo
+
+Provides: iplike %{version}-%{release}
 
 %description
 PostgreSQL function for doing complex IP address queries
 on a text field.
 
 %prep
-%setup -n %{name}-%{version}
+%setup -n %{srcdir}
 
 %build
+export PG_PLUGINDIR="%{_libdir}/iplike/@PG_MAJOR_VERSION@"
 %configure
 make
 
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
+mv "%{buildroot}%{_sbindir}/install_iplike.sh" "%{buildroot}%{_sbindir}/%{install_iplike}"
 
 %post
 
@@ -38,7 +43,7 @@ if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
 	FAILED=0
 
 	echo -e "- installing iplike into the opennms db (if it exists)... \c"
-	if %{_sbindir}/install_iplike.sh -s postgres -d opennms >>/tmp/install_iplike.log 2>&1; then
+	if %{_sbindir}/%{install_iplike} -s postgres -d opennms >>/tmp/install_iplike.log 2>&1; then
 		echo "OK"
 	else
 		echo "failed"
@@ -53,8 +58,8 @@ if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
 Failed to install iplike into the opennms database.
 See /tmp/install_iplike.log for details.
 
-To install iplike into your database, use the %{_sbindir}/install_iplike.sh
-script.  See \`install_iplike.sh -h\` for more details.
+To install iplike into your database, use the %{_sbindir}/%{install_iplike}
+script.  See \`%{install_iplike} -h\` for more details.
 
 END
 
@@ -71,10 +76,13 @@ if [ "$RPM_BUILD_ROOT" != "/" ]; then
 fi
 
 %files
-%attr(755,root,root) %{_libdir}/iplike*
-%attr(755,root,root) %{_sbindir}/install_iplike.sh
+%attr(755,root,root) %{_libdir}/iplike/@PG_MAJOR_VERSION@
+%attr(755,root,root) %{_sbindir}/%{install_iplike}
 
 %changelog
+* Wed Oct 23 2019 Benjamin Reed <ranger@opennms.org>
+- convert to support multi-postgresql builds
+
 * Mon Jun 18 2007 Benjamin Reed <ranger@opennms.org>
 - add RPM build to the autotools stuff
 - add postinstall to insert iplike into template1

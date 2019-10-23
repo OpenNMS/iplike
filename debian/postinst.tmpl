@@ -20,17 +20,17 @@ set -e
 
 LOGFILE=/tmp/install_iplike.log
 POSTGRESQL_VERSION="@POSTGRESQL_VERSION@"
-PGSQL_TYPE="@PGSQL_TYPE@"
-PGPLUGINDIR="@PG_PLUGINDIR@"
+PG_TYPE_VERSION="@PG_TYPE_VERSION@"
+PG_PLUGINDIR="@PG_PLUGINDIR@"
 
 case "$1" in
     configure)
-    update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PGSQL_TYPE.sh" $PGSQL_TYPE
-    update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PGPLUGINDIR/iplike.so"                  $PGSQL_TYPE
+    update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PG_TYPE_VERSION.sh" $PG_TYPE_VERSION
+    update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PG_PLUGINDIR/iplike.so"                  $PG_TYPE_VERSION
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
         FAILED=0
-        /usr/sbin/install_iplike-$PGSQL_TYPE.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || FAILED=1
+        /usr/sbin/install_iplike-$PG_TYPE_VERSION.sh -x /var/run/postgresql -s postgres -d opennms >${LOGFILE} 2>&1 || FAILED=1
 
         if [ $FAILED -eq 1 ]; then
             db_input high iplike/iplike-install-failed || true

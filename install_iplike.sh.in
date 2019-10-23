@@ -5,7 +5,7 @@
 [ -z "$PG_HOST"      ] && PG_HOST="localhost"
 [ -z "$PG_PORT"      ] && PG_PORT="5432"
 [ -z "$PG_PSQL"      ] && PG_PSQL="@PSQL_BINDIR@/psql"
-[ -z "$PG_PLUGINDIR" ] && PG_PLUGINDIR="@PGPLUGINDIR@"
+[ -z "$PG_PLUGINDIR" ] && PG_PLUGINDIR="@PG_PLUGINDIR@"
 
 do_error() {
 	echo "Cannot install iplike: $@"

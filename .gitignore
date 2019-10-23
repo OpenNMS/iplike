@@ -41,5 +41,4 @@ debian/overrides
 debian/postinst
 debian/prerm
 debian/rules
-debian/setver.sh
 debian/stamp-*
