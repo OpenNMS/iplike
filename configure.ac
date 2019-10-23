@@ -52,13 +52,9 @@ AC_MSG_CHECKING([for PostgreSQL version])
 PG_VERSION="`${PGCONFIG} --version | sed -e 's,^.* ,,' -e 's, *$,,'`"
 AC_MSG_RESULT([$PG_VERSION])
 
-AC_MSG_CHECKING([for PostgreSQL major version])
-PG_MAJOR_VERSION="`echo ${PG_VERSION} | awk -F. '{$NF=""}1' | sed -e 's, *$,,' -e 's, ,.,g'`"
-AC_MSG_RESULT([$PG_MAJOR_VERSION])
-
-AC_MSG_CHECKING([for PostgreSQL package version])
-PG_TYPE_VERSION="`echo ${PG_MAJOR_VERSION} | sed -e 's,\.,,'`"
-AC_MSG_RESULT([$PG_TYPE_VERSION])
+PG_MAJOR_VERSION="`echo ${PG_VERSION} | cut -d. -f1`"
+PG_API_VERSION="`echo ${PG_VERSION} | awk -F. '{$NF=""}1' | sed -e 's, *$,,' -e 's, ,.,g'`"
+PG_TYPE_VERSION="`echo ${PG_API_VERSION} | sed -e 's,\.,,'`"
 
 AC_ARG_VAR(PG_PLUGINDIR, [override the directory the plugin is installed to])
 
@@ -169,6 +165,7 @@ AC_SUBST([PG_PLUGINDIR])
 AC_SUBST([PG_BUNDLE_LOADER])
 AC_SUBST([PG_VERSION])
 AC_SUBST([PG_MAJOR_VERSION])
+AC_SUBST([PG_API_VERSION])
 AC_SUBST([PG_TYPE_VERSION])
 AC_SUBST([CLI_LDFLAGS])
 
@@ -182,7 +179,7 @@ AC_OUTPUT
 for INFILE in debian/*.tmpl; do
 	OUTFILE="$(echo "$INFILE" | sed -e 's,.tmpl$,,')"
 	echo "translating $INFILE to $OUTFILE"
-	sed -e "s,@POSTGRESQL_VERSION@,${PG_MAJOR_VERSION},g" \
+	sed -e "s,@POSTGRESQL_VERSION@,${PG_API_VERSION},g" \
 		-e "s,@PG_TYPE_VERSION@,${PG_TYPE_VERSION},g" \
 		-e "s,@IPLIKE_VERSION@,${PACKAGE_VERSION},g" \
 		-e "s,@PG_LIBDIR@,${PG_LIBDIR},g" \

@@ -28,7 +28,7 @@ on a text field.
 %setup -n %{srcdir}
 
 %build
-export PG_PLUGINDIR="%{_libdir}/iplike/@PG_MAJOR_VERSION@"
+export PG_PLUGINDIR="%{_libdir}/iplike/@PG_API_VERSION@"
 %configure
 make
 
@@ -68,7 +68,17 @@ END
 
 fi
 
+if [ -x /usr/sbin/update-alternatives ]; then
+	/usr/sbin/update-alternatives --install "%{_sbindir}/install_iplike.sh" "install_iplike.sh" "%{_sbindir}/install_iplike-@PG_TYPE_VERSION@.sh" "@PG_MAJOR_VERSION@"
+fi
+
 exit 0
+
+%preun
+
+if [ -x /usr/sbin/update-alternatives ]; then
+	/usr/sbin/update-alternatives --remove "install_iplike.sh" "%{_sbindir}/install_iplike-@PG_TYPE_VERSION@.sh"
+fi
 
 %clean
 if [ "$RPM_BUILD_ROOT" != "/" ]; then
@@ -76,7 +86,7 @@ if [ "$RPM_BUILD_ROOT" != "/" ]; then
 fi
 
 %files
-%attr(755,root,root) %{_libdir}/iplike/@PG_MAJOR_VERSION@
+%attr(755,root,root) %{_libdir}/iplike/@PG_API_VERSION@
 %attr(755,root,root) %{_sbindir}/%{install_iplike}
 
 %changelog
