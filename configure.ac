@@ -49,7 +49,7 @@ PGLIBDIR="`${PGCONFIG} --libdir`"
 PSQL_BINDIR=`$PGCONFIG --bindir`
 
 AC_MSG_CHECKING([for PostgreSQL version])
-PG_VERSION="`${PGCONFIG} --version | sed -e 's,^.* ,,' -e 's, *$,,'`"
+PG_VERSION="`${PGCONFIG} --version | cut -d' ' -f2`"
 AC_MSG_RESULT([$PG_VERSION])
 
 PG_MAJOR_VERSION="`echo ${PG_VERSION} | cut -d. -f1`"
