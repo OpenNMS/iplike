@@ -25,8 +25,8 @@ PG_PLUGINDIR="@PG_PLUGINDIR@"
 
 case "$1" in
     configure)
-    update-alternatives --install "/usr/sbin/install_iplike.sh"       "install_iplike.sh" "/usr/sbin/install_iplike-$PG_TYPE_VERSION.sh" $PG_TYPE_VERSION
-    update-alternatives --install "/usr/share/java/opennms/iplike.so" "iplike.so"         "$PG_PLUGINDIR/iplike.so"                  $PG_TYPE_VERSION
+    update-alternatives --install "/usr/sbin/install_iplike.sh" "install_iplike.sh" "/usr/sbin/install_iplike-$PG_TYPE_VERSION.sh" $PG_TYPE_VERSION
+    update-alternatives --remove "iplike.so" "$PG_PLUGINDIR/iplike.so"
 
     if [ -z "$SKIP_IPLIKE_INSTALL" ]; then
         FAILED=0
