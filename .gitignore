@@ -2,6 +2,7 @@
 *~
 *.tar.gz
 .deps
+.idea
 .libs
 Makefile
 Makefile.in

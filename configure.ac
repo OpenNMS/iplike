@@ -1,23 +1,31 @@
 m4_include([version.m4])
-AC_PREREQ(2.59)
-AC_INIT([iplike], VERSION_NUMBER, [http://www.opennms.org])
+AC_PREREQ([2.71])
+AC_INIT([iplike],[VERSION_NUMBER],[http://www.opennms.org])
 
 RELEASE=1
 AC_SUBST([RELEASE])
 
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.9 foreign])
 AC_ENABLE_STATIC([no])
 
 # don't test c++ and f77 in libtool
 m4_ifdef([AC_LIBTOOL_TAGS], [AC_LIBTOOL_TAGS([])])
 
-AC_HEADER_STDC
+m4_warn([obsolete],
+[The preprocessor macro `STDC_HEADERS' is obsolete.
+  Except in unusual embedded environments, you can safely include all
+  ISO C90 headers unconditionally.])dnl
+# Autoupdate added the next two lines to ensure that your configure
+# script's behavior did not change.  They are probably safe to remove.
+AC_CHECK_INCLUDES_DEFAULT
+AC_PROG_EGREP
+
 
 AC_PROG_CC
 AC_PROG_LN_S
-AC_PROG_LIBTOOL
+LT_INIT
 AC_PROG_INSTALL
 ONMS_CHECK_SUNCC
 ONMS_SET_CC_WARNING_CFLAGS
@@ -79,7 +87,7 @@ AC_CHECK_HEADERS([windef.h])
 AC_MSG_CHECKING(for postgres.h)
 AC_CACHE_VAL(onms_cv_postgres_h_good_without_undef,
   [
-    AC_TRY_COMPILE([
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
       /* These are defined in pg_config.h and in confdefs.h, which is bad */
       #undef PACKAGE_BUGREPORT
       #undef PACKAGE_NAME
@@ -94,10 +102,7 @@ AC_CACHE_VAL(onms_cv_postgres_h_good_without_undef,
 
       #include <ctype.h>
       #include <postgres.h>
-    ],
-    [],
-    [onms_cv_postgres_h_good_without_undef=yes],
-    [onms_cv_postgres_h_good_without_undef=no])
+    ]], [[]])],[onms_cv_postgres_h_good_without_undef=yes],[onms_cv_postgres_h_good_without_undef=no])
   ])
 AC_MSG_RESULT($onms_cv_postgres_h_good_without_undef)
 
@@ -106,7 +111,7 @@ AS_IF([test "x$onms_cv_postgres_h_good_without_undef" != "xyes"],
     AC_MSG_CHECKING(for postgres.h with _FILE_OFFSET_BITS undefined)
     AC_CACHE_VAL(onms_cv_postgres_h_good_with_undef,
       [
-        AC_TRY_COMPILE([
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
           /* These are defined in pg_config.h and in confdefs.h, which is bad */
           #undef PACKAGE_BUGREPORT
           #undef PACKAGE_NAME
@@ -124,10 +129,7 @@ AS_IF([test "x$onms_cv_postgres_h_good_without_undef" != "xyes"],
           #undef _FILE_OFFSET_BITS
 
           #include <postgres.h>
-        ],
-        [],
-        [onms_cv_postgres_h_good_with_undef=yes],
-        [onms_cv_postgres_h_good_with_undef=no])
+        ]], [[]])],[onms_cv_postgres_h_good_with_undef=yes],[onms_cv_postgres_h_good_with_undef=no])
       ])
     AC_MSG_RESULT($onms_cv_postgres_h_good_with_undef)
 
@@ -186,3 +188,4 @@ for INFILE in debian/*.tmpl; do
 		-e "s,@PG_PLUGINDIR@,${PG_PLUGINDIR},g" \
 		"$INFILE" > "$OUTFILE"
 done
+

@@ -1,3 +1,5 @@
+[![iplike-build](https://github.com/Bluebird-Community/iplike/actions/workflows/iplike-build.yaml/badge.svg)](https://github.com/Bluebird-Community/iplike/actions/workflows/iplike-build.yaml)
+
 # Advanced IP Address String Matching for PostgreSQL
 
 While PostgreSQL has native support for IP addresses, there are use
@@ -92,3 +94,17 @@ Match any link-local IPv6 address:
 
 * `SELECT iplike(ipaddr, 'fe80:*:*:*:*:*:*:*');`
 
+# Releasing packages
+
+Creating a release is triggered by pushing a version tag following the semantic versioning schema using `v{major}.{minor}.{patch}`, e.g. `v2.3.1`.
+The `main` branch is equivalent to the latest released version.
+The steps to prepare and publish a release:
+
+1. Create a changelog entry in the `debian/changelog.tmpl` file with the changes and the new version number.
+2. Set the version in `version.m4` file
+3. Commit to the main branch and verify if CI/CD goes green
+4. Push a version tag from main to publish the release
+5. Fill the release notes with the same content as the `debian/changelog.tmpl` entry
+
+> [!IMPORTANT]
+> The version number in the `debian/changelog.tmpl` drives the Debian package version number and is important.
