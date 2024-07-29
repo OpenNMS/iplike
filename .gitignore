@@ -43,3 +43,7 @@ debian/postinst
 debian/prerm
 debian/rules
 debian/stamp-*
+
+# IntelliJ IDEA
+.idea/
+
