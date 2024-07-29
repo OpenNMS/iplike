@@ -38,25 +38,9 @@ jobs:
         with:
           name: iplike-pgsql-${{ matrix.pg_version }}
           path: debian/artifacts/*
-
-  ## Publish a release triggered by a git tag push
-  release:
-    strategy:
-      matrix:
-        pg_version: [ 10, 11, 12, 13, 14, 15, 16 ]
-    needs:
-      - build
-    # Only publish release artifacts on pushing a Git tag with a version number starting with v*
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    container:
-      image: quay.io/bluebird/iplike-builder:0.0.6
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: iplike-pgsql-${{ matrix.pg_version }}
-          path: debian/artifacts
       - name: Publish Debian packages to Cloudsmith
+        # Only publish release artifacts on pushing a Git tag with a version number starting with v*
+        if: startsWith(github.ref, 'refs/tags/v')
         shell: bash
         run: |
           export CLOUDSMITH_API_KEY=${{ secrets.CLOUDSMITH_API_KEY }}
