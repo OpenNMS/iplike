@@ -12,7 +12,7 @@ jobs:
         pg_version: [ 10, 11, 12, 13, 14, 15, 16 ]
     runs-on: ubuntu-latest
     container:
-      image: quay.io/bluebird/iplike-builder:0.0.1.b18
+      image: quay.io/bluebird/iplike-builder:0.0.6
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,7 +50,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     container:
-      image: quay.io/bluebird/iplike-builder:0.0.1.b18
+      image: quay.io/bluebird/iplike-builder:0.0.6
     steps:
       - uses: actions/download-artifact@v4
         with:
