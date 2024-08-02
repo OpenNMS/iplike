@@ -12,7 +12,7 @@ jobs:
         pg_version: [ 10, 11, 12, 13, 14, 15, 16 ]
     runs-on: ubuntu-latest
     container:
-      image: quay.io/bluebird/iplike-builder:0.0.6
+      image: quay.io/bluebird/iplike-builder:0.1.0.b38
     steps:
       - uses: actions/checkout@v4
         with:
