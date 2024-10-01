@@ -9,10 +9,10 @@ jobs:
   build:
     strategy:
       matrix:
-        pg_version: [ 10, 11, 12, 13, 14, 15, 16 ]
+        pg_version: [ 10, 11, 12, 13, 14, 15, 16, 17 ]
     runs-on: ubuntu-latest
     container:
-      image: quay.io/bluebird/iplike-builder:0.1.0.b38
+      image: quay.io/bluebird/iplike-builder:0.2.0.b1
     steps:
       - uses: actions/checkout@v4
         with:
