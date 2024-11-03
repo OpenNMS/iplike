@@ -15,7 +15,6 @@ Summary: PostgreSQL complex IP Address text field query
 Source: %{srcdir}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
-BuildRequires: %{postgresql_dev}, gcc, make
 Requires: sudo
 
 Provides: iplike = %{version}-%{release}
