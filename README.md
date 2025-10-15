@@ -1,5 +1,7 @@
 [![iplike-build](https://github.com/Bluebird-Community/iplike/actions/workflows/iplike-build.yaml/badge.svg)](https://github.com/Bluebird-Community/iplike/actions/workflows/iplike-build.yaml)
+[![Packages Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith&style=flat-square)](https://cloudsmith.io/~bluebird/repos/common/packages/)
 
+https://cloudsmith.io/~bluebird/repos/common/packages/
 # Advanced IP Address String Matching for PostgreSQL
 
 While PostgreSQL has native support for IP addresses, there are use
