@@ -1,0 +1,69 @@
+---
+name: oci-build-env
+run-name: Build IPLIKE OCI Build Environment
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'oci-build-env/**'
+
+jobs:
+  oci-builder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set version number, data and short git hash
+        working-directory: oci-build-env
+        run: |
+          echo "OCI_TAG=$(cat release.tag)" >> ${GITHUB_ENV}
+          echo "SHORT_GIT_SHA=$(git rev-parse --short HEAD)" >> ${GITHUB_ENV}
+          echo "BUILD_DATE"=$(date -u +"%Y-%m-%dT%H:%M:%SZ") >> ${GITHUB_ENV}
+      - name: Create Dockerfile
+        working-directory: oci-build-env
+        run: make Dockerfile
+
+      ## Any other branch just build locally, no docker push
+      - name: Build container image
+        if: github.ref != 'refs/heads/master'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./oci-build-env
+          # only single arch on branches, because of
+          # ERROR: docker exporter does not currently support exporting manifest lists
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: ${{ env.OCI_TAG }}.${{ env.SHORT_GIT_SHA }}
+      - name: Save image as artifact
+        if: github.ref != 'refs/heads/master'
+        run: docker image save ${{ env.OCI_TAG }}.${{ env.SHORT_GIT_SHA }} -o ./oci-build-env/build/iplike-build-env-${{ env.SHORT_GIT_SHA }}.oci
+      - name: Persist OCI
+        if: github.ref != 'refs/heads/master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: iplike-build-env
+          path: |
+            oci-build-env/build/*.oci
+
+      ## On main branch, build and push to GHCR
+      - name: Set up QEMU
+        if: github.ref == 'refs/heads/master'
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        if: github.ref == 'refs/heads/master'
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Container registry
+        if: github.ref == 'refs/heads/master'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_PAT }}
+      - name: Build and push container image
+        if: github.ref == 'refs/heads/master'
+        uses: docker/build-push-action@v6
+        with:
+          context: ./oci-build-env
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/${{ env.OCI_TAG }}.${{ env.SHORT_GIT_SHA }},ghcr.io/${{ github.repository_owner }}/iplike-builder:latest

@@ -1,9 +1,12 @@
+.DS_Store
+.idea
 .*.swp
 *~
 *.tar.gz
 .deps
 .libs
 Makefile
+!oci-build-env/Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache
