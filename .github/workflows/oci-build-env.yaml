@@ -25,7 +25,7 @@ jobs:
       ## Any other branch just build locally, no docker push
       - name: Build container image
         if: github.ref != 'refs/heads/master'
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./oci-build-env
           # only single arch on branches, because of
@@ -66,4 +66,4 @@ jobs:
           context: ./oci-build-env
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ env.OCI_TAG }}.${{ env.SHORT_GIT_SHA }},ghcr.io/${{ github.repository_owner }}/iplike-builder:latest
+          tags: ghcr.io/opennms/${{ env.OCI_TAG }}.${{ env.SHORT_GIT_SHA }},ghcr.io/opennms/iplike-builder:latest
