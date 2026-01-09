@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: write
     container:
-      image: ghcr.io/opennms/iplike-builder:0.0.1.b838083
+      image: ghcr.io/opennms/iplike-builder:0.0.1.2266548
     steps:
       - uses: actions/checkout@v4
         with:
