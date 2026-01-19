@@ -11,7 +11,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        pg_version: [ 13, 14, 15, 16, 17, 18 ]
+        pg_version: [ 14, 15, 16, 17, 18 ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
